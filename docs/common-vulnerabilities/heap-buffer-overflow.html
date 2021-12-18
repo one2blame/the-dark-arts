@@ -1,0 +1,368 @@
+<!DOCTYPE HTML>
+<html lang="en" class="sidebar-visible no-js ayu">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>Heap buffer overflow - Introduction to the Dark Arts</title>
+        <!-- Custom HTML head -->
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff" />
+
+        <link rel="icon" href="../favicon.svg">
+        <link rel="shortcut icon" href="../favicon.png">
+        <link rel="stylesheet" href="../css/variables.css">
+        <link rel="stylesheet" href="../css/general.css">
+        <link rel="stylesheet" href="../css/chrome.css">
+        <link rel="stylesheet" href="../css/print.css" media="print">
+        <!-- Fonts -->
+        <link rel="stylesheet" href="../FontAwesome/css/font-awesome.css">
+        <link rel="stylesheet" href="../fonts/fonts.css">
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" href="../highlight.css">
+        <link rel="stylesheet" href="../tomorrow-night.css">
+        <link rel="stylesheet" href="../ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+    </head>
+    <body>
+        <!-- Provide site root to javascript -->
+        <script type="text/javascript">
+            var path_to_root = "../";
+            var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "navy" : "ayu";
+        </script>
+
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script type="text/javascript">
+            try {
+                var theme = localStorage.getItem('mdbook-theme');
+                var sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script type="text/javascript">
+            var theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            var html = document.querySelector('html');
+            html.classList.remove('no-js')
+            html.classList.remove('ayu')
+            html.classList.add(theme);
+            html.classList.add('js');
+        </script>
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script type="text/javascript">
+            var html = document.querySelector('html');
+            var sidebar = 'hidden';
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            }
+            html.classList.remove('sidebar-visible');
+            html.classList.add("sidebar-" + sidebar);
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <div class="sidebar-scrollbox">
+                <ol class="chapter"><li class="chapter-item expanded affix "><a href="../introduction.html">Introduction</a></li><li class="chapter-item expanded "><a href="../reverse-engineering/reverse-engineering.html"><strong aria-hidden="true">1.</strong> Reverse engineering</a><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../reverse-engineering/static-reverse-engineering.html"><strong aria-hidden="true">1.1.</strong> Static reverse Engineering</a></li><li class="chapter-item expanded "><a href="../reverse-engineering/dynamic-reverse-engineering.html"><strong aria-hidden="true">1.2.</strong> Dynamic reverse engineering</a></li><li class="chapter-item expanded "><a href="../reverse-engineering/dumb-fuzzing.html"><strong aria-hidden="true">1.3.</strong> Dumb fuzzing</a></li><li class="chapter-item expanded "><a href="../reverse-engineering/instrumentation.html"><strong aria-hidden="true">1.4.</strong> Instrumentation</a></li><li class="chapter-item expanded "><a href="../reverse-engineering/code-coverage-fuzzing.html"><strong aria-hidden="true">1.5.</strong> Coverage-based fuzzing</a></li><li class="chapter-item expanded "><a href="../reverse-engineering/symbolic-execution.html"><strong aria-hidden="true">1.6.</strong> Symbolic execution</a></li><li class="chapter-item expanded "><a href="../reverse-engineering/binary-diffing.html"><strong aria-hidden="true">1.7.</strong> Binary diffing</a></li><li class="chapter-item expanded "><a href="../reverse-engineering/binary-diffing-tools.html"><strong aria-hidden="true">1.8.</strong> Binary diffing tools</a></li></ol></li><li class="chapter-item expanded "><a href="../common-vulnerabilities/common-vulnerabilities.html"><strong aria-hidden="true">2.</strong> Common vulnerabilities</a><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../common-vulnerabilities/stack-buffer-overflow.html"><strong aria-hidden="true">2.1.</strong> Stack buffer overflow</a></li><li class="chapter-item expanded "><a href="../common-vulnerabilities/heap-buffer-overflow.html" class="active"><strong aria-hidden="true">2.2.</strong> Heap buffer overflow</a><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><a href="../common-vulnerabilities/house-of-force.html"><strong aria-hidden="true">2.2.1.</strong> House of Force</a></li><li class="chapter-item "><a href="../common-vulnerabilities/house-of-orange.html"><strong aria-hidden="true">2.2.2.</strong> House of Orange</a></li><li class="chapter-item "><a href="../common-vulnerabilities/single-byte-overflows.html"><strong aria-hidden="true">2.2.3.</strong> Single Byte Overflows</a></li></ol></li><li class="chapter-item expanded "><a href="../common-vulnerabilities/use-after-free.html"><strong aria-hidden="true">2.3.</strong> Use after free</a><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><a href="../common-vulnerabilities/fastbin-dup.html"><strong aria-hidden="true">2.3.1.</strong> Fastbin Dup</a></li><li class="chapter-item "><a href="../common-vulnerabilities/unsortedbin-attack.html"><strong aria-hidden="true">2.3.2.</strong> Unsortedbin Attack</a></li></ol></li><li class="chapter-item expanded "><a href="../common-vulnerabilities/heap-grooming.html"><strong aria-hidden="true">2.4.</strong> Heap grooming</a></li><li class="chapter-item expanded "><a href="../common-vulnerabilities/race-conditions.html"><strong aria-hidden="true">2.5.</strong> Race conditions</a></li></ol></li><li class="chapter-item expanded "><a href="../exploit-primitives/exploit-primitives.html"><strong aria-hidden="true">3.</strong> Exploit primitives</a><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../exploit-primitives/arbitrary-write-primitives.html"><strong aria-hidden="true">3.1.</strong> Arbitrary write primitives</a></li><li class="chapter-item expanded "><a href="../exploit-primitives/relative-write-primitives.html"><strong aria-hidden="true">3.2.</strong> Relative write primitives</a></li><li class="chapter-item expanded "><a href="../exploit-primitives/arbitrary-read-primitives.html"><strong aria-hidden="true">3.3.</strong> Arbitrary read primitives</a></li><li class="chapter-item expanded "><a href="../exploit-primitives/chaining-primitives.html"><strong aria-hidden="true">3.4.</strong> Chaining primitives</a></li><li class="chapter-item expanded "><a href="../exploit-primitives/escalating-privileges.html"><strong aria-hidden="true">3.5.</strong> Escalating privileges</a></li></ol></li><li class="chapter-item expanded "><a href="../return-oriented-programming/return-oriented-programming.html"><strong aria-hidden="true">4.</strong> Return oriented programming</a><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../return-oriented-programming/aslr-nx.html"><strong aria-hidden="true">4.1.</strong> ASLR/NX</a></li><li class="chapter-item expanded "><a href="../return-oriented-programming/finding-gadgets.html"><strong aria-hidden="true">4.2.</strong> Finding gadgets</a></li><li class="chapter-item expanded "><a href="../return-oriented-programming/calling-libc-functions-and-syscalls.html"><strong aria-hidden="true">4.3.</strong> Calling libc functions and syscalls</a></li><li class="chapter-item expanded "><a href="../return-oriented-programming/chaining-gadgets-to-execute-code.html"><strong aria-hidden="true">4.4.</strong> Chaining gadgets to execute code</a></li><li class="chapter-item expanded "><a href="../return-oriented-programming/executing-arbitrary-shellcode.html"><strong aria-hidden="true">4.5.</strong> Executing arbitrary shellcode</a></li></ol></li><li class="chapter-item expanded "><a href="../exploit-mitigations/exploit-mitigations.html"><strong aria-hidden="true">5.</strong> Exploit mitigations</a><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../exploit-mitigations/aslr.html"><strong aria-hidden="true">5.1.</strong> Address Space Layout Randomization (ASLR)</a></li><li class="chapter-item expanded "><a href="../exploit-mitigations/dep.html"><strong aria-hidden="true">5.2.</strong> Data Execution Prevention (DEP)/NX</a></li><li class="chapter-item expanded "><a href="../exploit-mitigations/position-independent-executables.html"><strong aria-hidden="true">5.3.</strong> Position Independent Executables (PIEs)</a></li><li class="chapter-item expanded "><a href="../exploit-mitigations/exploiting-pies.html"><strong aria-hidden="true">5.4.</strong> Exploiting PIEs</a></li><li class="chapter-item expanded "><a href="../exploit-mitigations/stack-canaries.html"><strong aria-hidden="true">5.5.</strong> Stack canaries</a></li><li class="chapter-item expanded "><a href="../exploit-mitigations/safe-list-unlinking.html"><strong aria-hidden="true">5.6.</strong> Safe list unlinking</a></li></ol></li></ol>
+            </div>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
+        </nav>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky bordered">
+                    <div class="left-buttons">
+                        <button id="sidebar-toggle" class="icon-button" type="button" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </button>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu (default)</button></li>
+                        </ul>
+                        <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
+                            <i class="fa fa-search"></i>
+                        </button>
+                    </div>
+
+                    <h1 class="menu-title">Introduction to the Dark Arts</h1>
+
+                    <div class="right-buttons">
+                        <a href="../print.html" title="Print this book" aria-label="Print this book">
+                            <i id="print-button" class="fa fa-print"></i>
+                        </a>
+                    </div>
+                </div>
+
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <input type="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script type="text/javascript">
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <main>
+                        <h1 id="heap-buffer-overflow"><a class="header" href="#heap-buffer-overflow">Heap buffer overflow</a></h1>
+<h2 id="what-is-a-heap"><a class="header" href="#what-is-a-heap">What is a heap?</a></h2>
+<p><strong>Heaps</strong> are contiguous blocks of memory chunks which <code>malloc()</code> allocates
+to a process. Heaps are dynamic in nature, so memory can also be <code>free()</code>d
+by a process when the memory is no longer needed. Heap memory is global and
+can be accessed and modified from anywhere within the process when referenced
+with a valid pointer. Heaps are treated differently depending on whether
+they belong to the main arena or not - more on arenas later.</p>
+<p><strong>Heaps</strong> can be created, extended, trimmed, and destroyed. The main arena
+heap is created during the first request for dynamic memory while heaps for
+other arenas are created with the <code>new_heap()</code> function. The main arena
+heap grows and shrinks with the use of the <code>brk()</code> or <code>sbrk()</code> system calls.
+These system calls are used to change the location of the program break,
+defining the end of the process's <code>data</code> segment. Increasing the
+program break allocates memory to the process; decreasing the break
+deallocates memory. <a href="#references">[1]</a></p>
+<h3 id="what-is-a-chunk"><a class="header" href="#what-is-a-chunk">What is a chunk?</a></h3>
+<p>Chunks are the fundamental unit of memory that <code>malloc()</code> deals in, they are
+pieces of heap memory. An allocated chunk in the heap is structured like this:</p>
+<pre><code>            word/qword          |           word/qword
+
++-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+|           prev size           |           chunk size        |A|M|P|
+|   (not used while allocated)  |                                   |
++-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+|           user data           |           user data               |
++-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+|           user data           |       size of next chunk    |A|M|P|
++-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+</code></pre>
+<p>The flags at the end of the second <code>word</code>/<code>qword</code> represent these chunk
+properties:</p>
+<ul>
+<li><strong>A</strong> (<code>NON_MAIN_ARENA</code>) - <code>0</code> for chunks in the main arena. Each thread
+spawned receives its own arena and for those chunks, this bit is set.</li>
+<li><strong>M</strong> (<code>IS_MMAPPED</code>) - The chunk was obtained using <code>mmap()</code>.</li>
+<li><strong>P</strong> (<code>PREV_INUSE</code>) - <code>0</code> when the previous chunk is free. The first chunk
+allocated will always have this bit set. <a href="#references">[3]</a></li>
+</ul>
+<p>The minimum usable chunk size is <code>0x20</code>, and chunk sizes increase in
+increments of 16 bytes: <code>0x20</code>, <code>0x30</code>, <code>0x40</code>, etc.</p>
+<h4 id="the-top-chunk"><a class="header" href="#the-top-chunk">The top chunk</a></h4>
+<p>The top chunk is the &quot;topmost available chunk, i.e. the one bordering the end
+of available memory&quot;. Requests are only serviced from a top chunk when they
+can't be serviced from any other bins in the same arena. <code>malloc()</code> keeps
+track of the remaining memory in a top chunk using its <code>chunk_size</code> field,
+and the <code>PREV_INUSE</code> bit of a top chunk is always set. A top chunk always
+contains enough memory to allocate a minimum-sized chunk and always ends on a
+page boundary. <a href="#references">[4]</a></p>
+<h3 id="what-is-an-arena"><a class="header" href="#what-is-an-arena">What is an arena?</a></h3>
+<p><code>malloc()</code> administrates a process's heaps using <code>malloc_state</code> structs, or
+<strong>arenas</strong>. <strong>Arenas</strong> contain <strong>bins</strong>, data strucutures used for recycling
+free chunks of heap memory. Definitions for each type of <strong>bin</strong> can be found
+below:</p>
+<h4 id="fastbins"><a class="header" href="#fastbins">fastbins</a></h4>
+<ul>
+<li>A collection of singly linked, non-circular lists that each hold free chunks
+of a specific size.</li>
+<li>The first <code>word</code>/<code>qword</code> of a chunk's user data is used as the forward
+pointer (<code>fd</code>) when linked into a fastbin.</li>
+<li>fastbins are LIFO data structures.</li>
+<li>Free chunks are linked into the fastbin if the tcachebin is full.</li>
+<li>For memory requests, the fastbin is searched after the tcachebin and before
+any other bin.</li>
+<li>There are 10 fastbins with chunk sizes: <code>16..88</code> bytes. <a href="#references">[2]</a></li>
+</ul>
+<h4 id="unsortedbin"><a class="header" href="#unsortedbin">unsortedbin</a></h4>
+<ul>
+<li>A doubly linked, circular list that holds free chunks of any size;
+essentially used to optimize resource requests.</li>
+<li>Free chunks are linked directly into the head of an unsortedbin when the
+tcachebin is full or they are outside tcachebin size range.</li>
+<li>The first <code>word</code>/<code>qword</code> of a chunk's user data is used as the forward
+pointer (<code>fd</code>) and the second <code>word</code>/<code>qword</code> is used as a backwards pointer
+(<code>bk</code>) when linked into an unsortedbin.
+<ul>
+<li>In versions of GLIBC compiled without the tcachebin, free chunks are linked
+directly into the head of an unsortedbin when they are outside fastbin range.</li>
+</ul>
+</li>
+<li>The unsortedbin is searched after the tcachebin, fastbin, and smallbins when
+the request size fits those ranges, but before the largebins.</li>
+<li>unsortedbin searches begin from the back and move towards the front.</li>
+<li>If a request fits a chunk within the unsortedbin, the search is stopped and
+the memory is allocated, otherwise the chunk is sorted into a smallbin or
+largebin. <a href="#references">[2]</a></li>
+</ul>
+<h4 id="smallbins"><a class="header" href="#smallbins">smallbins</a></h4>
+<ul>
+<li>A collection of doubly linked, circular lists that each hold free chunks of a
+specific size.</li>
+<li>Free chunks are only linked into a smallbin when the chunk's arena sorts the
+unsortedbin.</li>
+<li>The first <code>word</code>/<code>qword</code> of a chunk's user data is used as the forward
+pointer (<code>fd</code>) and the second <code>word</code>/<code>qword</code> is used as a backwards pointer
+(<code>bk</code>) when linked into a smallbin.</li>
+<li>smallbins are FIFO data structures.</li>
+<li>For memory requests, smallbins are searched after the tcachebin, after
+fastbins if the request was in fastbin size range, and before any other bins
+are searched if the request was in smallbin range.</li>
+<li>There are 62 smallbins with chunk sizes: <code>16..512</code> bytes (32-bit),
+<code>16..1024</code> bytes (64-bit). <a href="#references">[2]</a></li>
+</ul>
+<h4 id="largebins"><a class="header" href="#largebins">largebins</a></h4>
+<ul>
+<li>A collection of doubly linked, circular lists that each hold free chunks
+within a range of sizes.</li>
+<li>Free chunks are only linked into a largebin when the chunk's arena sorts the
+unsortedbin.</li>
+<li>largebins are maintained in descending size order.
+<ul>
+<li>The largest chunk is accessible via the bin's <code>fd</code> pointer.</li>
+<li>The smallest chunk is accessible via the bin's <code>bk</code> pointer.</li>
+</ul>
+</li>
+<li>The first <code>word</code>/<code>qword</code> of a chunk's user data is used as the forward
+pointer (<code>fd</code>) and the second <code>word</code>/<code>qword</code> is used as a backwards pointer
+(<code>bk</code>) when linked into a largebin.</li>
+<li>The first chunk of its size linked into a largebin has the third and fourth
+<code>word</code>/<code>qword</code>s repurposed as <code>fd_nextsize</code> and <code>bk_nextsize</code>, respectively.</li>
+<li>The nextsize pointers are used to form another doubly linked, circular list
+holding the first chunk of each size linked into that largebin. Subsequent
+chunks of the same size are added after the first chunk of that size.</li>
+<li>The nextsize pointers are used as a skip list.</li>
+<li>For memory requests, largebins are searched after an unsortedbin, but before
+a binmap search.</li>
+<li>There are 63 largebins with chunk sizes starting at: <code>512</code> bytes (32-bit),
+<code>1024</code> bytes (64-bit). <a href="#references">[2]</a></li>
+</ul>
+<h4 id="what-is-a-tcache"><a class="header" href="#what-is-a-tcache">What is a tcache?</a></h4>
+<p>A tcache behaves like an arena but, unlike arenas, is not shared between
+threads of a process. They are created by allocating space on a heap belonging
+to their thread's arena and are freed when the thread exits. The purpose of a
+tcache is to relieve thread contention for malloc's resources by allocating to
+each thread its own collection of chunks.</p>
+<ul>
+<li>The tcache is present in GLIBC versions &gt;= 2.26.</li>
+<li>A tcache takes the form of a <code>tcache_perthread</code> struct which holds the heads
+of 64 tcachebins preceded by an array of counters which record the number of
+chunks in each tcachebin.</li>
+<li>tcachebins are singly linked, non-circular lists of free chunks of a specific
+size.</li>
+<li>When a tcachebin reaches it's maximum number of chunks, free chunks of that
+bin's size are instead treated as they would be without a tcache present.</li>
+<li>There are 64 tcachebins with chunk sizes: <code>12..516</code> bytes (32-bit),
+<code>24..1032</code> bytes (64-bit). <a href="#references">[2]</a></li>
+</ul>
+<h2 id="heap-overflow"><a class="header" href="#heap-overflow">Heap overflow</a></h2>
+<p>OK, so all of the previous information was great right? It may seem like a lot,
+but understanding the intricacies of the GLIBC Heap is important to effectively
+exploit it. Now, I'll finally define what a heap overflow is:</p>
+<p>&quot;A heap overflow is a buffer overflow, where the buffer that can be overwritten
+is allocated in the heap portion of memory, generally meaning that the buffer
+was allocated using a routine such as malloc().&quot; <a href="#references">[5]</a></p>
+<p>Here's an example of code that presents a heap overflow vulnerability:</p>
+<pre><code class="language-c">#define BUFSIZE 256
+int main(int argc, char **argv) {
+    char *buf;
+    buf = (char *)malloc(sizeof(char)*BUFSIZE);
+    strcpy(buf, argv[1]);
+}
+</code></pre>
+<p>No bounds checking is conducted on <code>argv[1]</code> before its data is copied into
+<code>buf</code>. <code>strcpy()</code> could possibly copy data from <code>argv[1]</code> well past the bounds
+of the chunk that was allocated on the heap to hold <code>buf</code>.</p>
+<p>Heap overflows are a dangerous weakness for a an application to have and, given
+the right circumstances, attackers can utilize a variety of techniques to gain
+arbitrary code execution. Techniques to exploit heap overflows have been
+studied since the early 2000's and we'll cover a number of these techniques in
+the following sections.</p>
+<h2 id="references"><a class="header" href="#references">References</a></h2>
+<ol>
+<li><a href="https://www.blackhat.com/presentations/bh-usa-07/Ferguson/Whitepaper/bh-usa-07-ferguson-WP.pdf">https://www.blackhat.com/presentations/bh-usa-07/Ferguson/Whitepaper/bh-usa-07-ferguson-WP.pdf</a></li>
+<li><a href="https://azeria-labs.com/heap-exploitation-part-2-glibc-heap-free-bins/">https://azeria-labs.com/heap-exploitation-part-2-glibc-heap-free-bins/</a></li>
+<li><a href="https://heap-exploitation.dhavalkapil.com/diving_into_glibc_heap/malloc_chunk.html">https://heap-exploitation.dhavalkapil.com/diving_into_glibc_heap/malloc_chunk.html</a></li>
+<li><a href="https://azeria-labs.com/heap-exploitation-part-1-understanding-the-glibc-heap-implementation/">https://azeria-labs.com/heap-exploitation-part-1-understanding-the-glibc-heap-implementation/</a></li>
+<li><a href="https://cwe.mitre.org/data/definitions/122.html">https://cwe.mitre.org/data/definitions/122.html</a></li>
+</ol>
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                            <a rel="prev" href="../common-vulnerabilities/stack-buffer-overflow.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
+                            <a rel="next" href="../common-vulnerabilities/house-of-force.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                    <a rel="prev" href="../common-vulnerabilities/stack-buffer-overflow.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+                    <a rel="next" href="../common-vulnerabilities/house-of-force.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+            </nav>
+
+        </div>
+
+        <!-- Livereload script (if served using the cli tool) -->
+        <script type="text/javascript">
+            var socket = new WebSocket("ws://localhost:3000/__livereload");
+            socket.onmessage = function (event) {
+                if (event.data === "reload") {
+                    socket.close();
+                    location.reload();
+                }
+            };
+
+            window.onbeforeunload = function() {
+                socket.close();
+            }
+        </script>
+        <script type="text/javascript">
+            window.playground_copyable = true;
+        </script>
+        <script src="../elasticlunr.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../mark.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../searcher.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../clipboard.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../highlight.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../book.js" type="text/javascript" charset="utf-8"></script>
+
+        <!-- Custom JS scripts -->
+    </body>
+</html>

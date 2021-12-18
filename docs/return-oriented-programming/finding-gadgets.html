@@ -1,0 +1,262 @@
+<!DOCTYPE HTML>
+<html lang="en" class="sidebar-visible no-js ayu">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>Finding gadgets - Introduction to the Dark Arts</title>
+        <!-- Custom HTML head -->
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff" />
+
+        <link rel="icon" href="../favicon.svg">
+        <link rel="shortcut icon" href="../favicon.png">
+        <link rel="stylesheet" href="../css/variables.css">
+        <link rel="stylesheet" href="../css/general.css">
+        <link rel="stylesheet" href="../css/chrome.css">
+        <link rel="stylesheet" href="../css/print.css" media="print">
+        <!-- Fonts -->
+        <link rel="stylesheet" href="../FontAwesome/css/font-awesome.css">
+        <link rel="stylesheet" href="../fonts/fonts.css">
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" href="../highlight.css">
+        <link rel="stylesheet" href="../tomorrow-night.css">
+        <link rel="stylesheet" href="../ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+    </head>
+    <body>
+        <!-- Provide site root to javascript -->
+        <script type="text/javascript">
+            var path_to_root = "../";
+            var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "navy" : "ayu";
+        </script>
+
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script type="text/javascript">
+            try {
+                var theme = localStorage.getItem('mdbook-theme');
+                var sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script type="text/javascript">
+            var theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            var html = document.querySelector('html');
+            html.classList.remove('no-js')
+            html.classList.remove('ayu')
+            html.classList.add(theme);
+            html.classList.add('js');
+        </script>
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script type="text/javascript">
+            var html = document.querySelector('html');
+            var sidebar = 'hidden';
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            }
+            html.classList.remove('sidebar-visible');
+            html.classList.add("sidebar-" + sidebar);
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <div class="sidebar-scrollbox">
+                <ol class="chapter"><li class="chapter-item expanded affix "><a href="../introduction.html">Introduction</a></li><li class="chapter-item expanded "><a href="../reverse-engineering/reverse-engineering.html"><strong aria-hidden="true">1.</strong> Reverse engineering</a><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../reverse-engineering/static-reverse-engineering.html"><strong aria-hidden="true">1.1.</strong> Static reverse Engineering</a></li><li class="chapter-item expanded "><a href="../reverse-engineering/dynamic-reverse-engineering.html"><strong aria-hidden="true">1.2.</strong> Dynamic reverse engineering</a></li><li class="chapter-item expanded "><a href="../reverse-engineering/dumb-fuzzing.html"><strong aria-hidden="true">1.3.</strong> Dumb fuzzing</a></li><li class="chapter-item expanded "><a href="../reverse-engineering/instrumentation.html"><strong aria-hidden="true">1.4.</strong> Instrumentation</a></li><li class="chapter-item expanded "><a href="../reverse-engineering/code-coverage-fuzzing.html"><strong aria-hidden="true">1.5.</strong> Coverage-based fuzzing</a></li><li class="chapter-item expanded "><a href="../reverse-engineering/symbolic-execution.html"><strong aria-hidden="true">1.6.</strong> Symbolic execution</a></li><li class="chapter-item expanded "><a href="../reverse-engineering/binary-diffing.html"><strong aria-hidden="true">1.7.</strong> Binary diffing</a></li><li class="chapter-item expanded "><a href="../reverse-engineering/binary-diffing-tools.html"><strong aria-hidden="true">1.8.</strong> Binary diffing tools</a></li></ol></li><li class="chapter-item expanded "><a href="../common-vulnerabilities/common-vulnerabilities.html"><strong aria-hidden="true">2.</strong> Common vulnerabilities</a><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../common-vulnerabilities/stack-buffer-overflow.html"><strong aria-hidden="true">2.1.</strong> Stack buffer overflow</a></li><li class="chapter-item expanded "><a href="../common-vulnerabilities/heap-buffer-overflow.html"><strong aria-hidden="true">2.2.</strong> Heap buffer overflow</a><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><a href="../common-vulnerabilities/house-of-force.html"><strong aria-hidden="true">2.2.1.</strong> House of Force</a></li><li class="chapter-item "><a href="../common-vulnerabilities/house-of-orange.html"><strong aria-hidden="true">2.2.2.</strong> House of Orange</a></li><li class="chapter-item "><a href="../common-vulnerabilities/single-byte-overflows.html"><strong aria-hidden="true">2.2.3.</strong> Single Byte Overflows</a></li></ol></li><li class="chapter-item expanded "><a href="../common-vulnerabilities/use-after-free.html"><strong aria-hidden="true">2.3.</strong> Use after free</a><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><a href="../common-vulnerabilities/fastbin-dup.html"><strong aria-hidden="true">2.3.1.</strong> Fastbin Dup</a></li><li class="chapter-item "><a href="../common-vulnerabilities/unsortedbin-attack.html"><strong aria-hidden="true">2.3.2.</strong> Unsortedbin Attack</a></li></ol></li><li class="chapter-item expanded "><a href="../common-vulnerabilities/heap-grooming.html"><strong aria-hidden="true">2.4.</strong> Heap grooming</a></li><li class="chapter-item expanded "><a href="../common-vulnerabilities/race-conditions.html"><strong aria-hidden="true">2.5.</strong> Race conditions</a></li></ol></li><li class="chapter-item expanded "><a href="../exploit-primitives/exploit-primitives.html"><strong aria-hidden="true">3.</strong> Exploit primitives</a><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../exploit-primitives/arbitrary-write-primitives.html"><strong aria-hidden="true">3.1.</strong> Arbitrary write primitives</a></li><li class="chapter-item expanded "><a href="../exploit-primitives/relative-write-primitives.html"><strong aria-hidden="true">3.2.</strong> Relative write primitives</a></li><li class="chapter-item expanded "><a href="../exploit-primitives/arbitrary-read-primitives.html"><strong aria-hidden="true">3.3.</strong> Arbitrary read primitives</a></li><li class="chapter-item expanded "><a href="../exploit-primitives/chaining-primitives.html"><strong aria-hidden="true">3.4.</strong> Chaining primitives</a></li><li class="chapter-item expanded "><a href="../exploit-primitives/escalating-privileges.html"><strong aria-hidden="true">3.5.</strong> Escalating privileges</a></li></ol></li><li class="chapter-item expanded "><a href="../return-oriented-programming/return-oriented-programming.html"><strong aria-hidden="true">4.</strong> Return oriented programming</a><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../return-oriented-programming/aslr-nx.html"><strong aria-hidden="true">4.1.</strong> ASLR/NX</a></li><li class="chapter-item expanded "><a href="../return-oriented-programming/finding-gadgets.html" class="active"><strong aria-hidden="true">4.2.</strong> Finding gadgets</a></li><li class="chapter-item expanded "><a href="../return-oriented-programming/calling-libc-functions-and-syscalls.html"><strong aria-hidden="true">4.3.</strong> Calling libc functions and syscalls</a></li><li class="chapter-item expanded "><a href="../return-oriented-programming/chaining-gadgets-to-execute-code.html"><strong aria-hidden="true">4.4.</strong> Chaining gadgets to execute code</a></li><li class="chapter-item expanded "><a href="../return-oriented-programming/executing-arbitrary-shellcode.html"><strong aria-hidden="true">4.5.</strong> Executing arbitrary shellcode</a></li></ol></li><li class="chapter-item expanded "><a href="../exploit-mitigations/exploit-mitigations.html"><strong aria-hidden="true">5.</strong> Exploit mitigations</a><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../exploit-mitigations/aslr.html"><strong aria-hidden="true">5.1.</strong> Address Space Layout Randomization (ASLR)</a></li><li class="chapter-item expanded "><a href="../exploit-mitigations/dep.html"><strong aria-hidden="true">5.2.</strong> Data Execution Prevention (DEP)/NX</a></li><li class="chapter-item expanded "><a href="../exploit-mitigations/position-independent-executables.html"><strong aria-hidden="true">5.3.</strong> Position Independent Executables (PIEs)</a></li><li class="chapter-item expanded "><a href="../exploit-mitigations/exploiting-pies.html"><strong aria-hidden="true">5.4.</strong> Exploiting PIEs</a></li><li class="chapter-item expanded "><a href="../exploit-mitigations/stack-canaries.html"><strong aria-hidden="true">5.5.</strong> Stack canaries</a></li><li class="chapter-item expanded "><a href="../exploit-mitigations/safe-list-unlinking.html"><strong aria-hidden="true">5.6.</strong> Safe list unlinking</a></li></ol></li></ol>
+            </div>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
+        </nav>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky bordered">
+                    <div class="left-buttons">
+                        <button id="sidebar-toggle" class="icon-button" type="button" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </button>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu (default)</button></li>
+                        </ul>
+                        <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
+                            <i class="fa fa-search"></i>
+                        </button>
+                    </div>
+
+                    <h1 class="menu-title">Introduction to the Dark Arts</h1>
+
+                    <div class="right-buttons">
+                        <a href="../print.html" title="Print this book" aria-label="Print this book">
+                            <i id="print-button" class="fa fa-print"></i>
+                        </a>
+                    </div>
+                </div>
+
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <input type="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script type="text/javascript">
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <main>
+                        <h1 id="finding-gadgets"><a class="header" href="#finding-gadgets">Finding gadgets</a></h1>
+<h2 id="what-methods-have-been-used-to-find-ropjop-gadgets"><a class="header" href="#what-methods-have-been-used-to-find-ropjop-gadgets">What methods have been used to find ROP/JOP gadgets?</a></h2>
+<p>It is known that <code>ROP</code> gadgets must end in a <code>ret</code> instruction. This allows us
+to search through a target binary or shared library to find our useful
+instruction sequences that will comprise our gadgets. Luckily for us, in both
+the <code>x86</code> and <code>amd64</code> architectures, instructions are variable-length and
+unaligned. This means that we can use both intended and unintended instruction
+sequences found within our targets, increasing the collection of available
+gadgets.</p>
+<p>A primary method presented in Hovav Shacham's paper is to find <code>ret</code>
+instructions and scan <em>backwards</em>, using an algorithm that uses each <code>ret</code>
+instruction as the root node of a tree and determining if the preceding bytes
+represent valid instructions. Each child node of the tree is a valid gadget,
+and the algorithm recursively explores the bytes preceding each child to
+determine if they are also valid gadgets that can be added to the tree - up to
+the maximum length of a valid <code>x86</code> instruction.</p>
+<p>Hovav contrasts this with finding <code>ROP</code> gadgets for <code>SPARC</code> targets. We cannot
+use unintended instruction sequences to represent <code>ROP</code> gadgets because <code>SPARC</code>
+enforces alignment on instruction read.
+<a href="#references">[4]</a> This essentially reinforces the
+point that an attacker must understand the specifics of the particular
+architecture they are attacking when condcuting <code>ROP</code>.</p>
+<p>Finding <code>JOP</code> gadgets follows a similar technique. A linear search can be
+conducted to find the valid starting bytes for an indirect branch instruction:
+<code>0xff</code>. This byte is usually followed by a second byte with a specified range
+of values. In the same manner as <code>ROP</code>, a search is conducted backwards to
+discover valid instructions that will comprise the gadget.</p>
+<p>In Xuxian Jiang's paper, a series of algorithms are utilized to find gadgets,
+deteremine if a gadget is viable for use, and to filter gadgets based upon a
+set of heuristics - separating the gadgets into groups that can be used for
+the <code>dispatcher gadget</code> and <code>functional gadgets</code>.
+<a href="#references">[5]</a></p>
+<h3 id="what-constraints-on-the-gadget-searching-problem-are-added-or-removed-by-searching-for-gadgets-in-risc-architectures-like-arm-or-mips-instead-of-x86amd64"><a class="header" href="#what-constraints-on-the-gadget-searching-problem-are-added-or-removed-by-searching-for-gadgets-in-risc-architectures-like-arm-or-mips-instead-of-x86amd64">What constraints on the gadget-searching problem are added or removed by searching for gadgets in RISC architectures (like ARM or MIPS) instead of x86/amd64?</a></h3>
+<p>For <code>x86</code>/<code>amd64</code> architectures, instructions are variable-length and
+unaligned. This means that we can consider both intentional and unintentional
+instructions for <code>ROP</code> gadgets. An unintentional instruction meaning we are
+jumping into the <em>middle</em> of intentional instructions.</p>
+<p>In contrast, <code>SPARC</code>, <code>MIPS</code>, and <code>ARM</code> enforce word alignment for
+instructions - this rules out the possibility of deriving our gadgets from
+unintentional instructions.</p>
+<h2 id="what-are-some-common-tools-used-to-find-ropjop-gadgets"><a class="header" href="#what-are-some-common-tools-used-to-find-ropjop-gadgets">What are some common tools used to find ROP/JOP gadgets?</a></h2>
+<p>The most popular tools used to discover <code>ROP</code> gadgets are <code>ROPgadget</code> and
+<code>ropper</code>. The links to these tools can be found in the
+<a href="#references">References</a> section. <a href="#references">[1]</a>, <a href="#references">[2]</a>
+The <code>pwntools</code> CTF framework and exploit development library also provides
+a <code>ROP</code> module that can find <code>ROP</code> gadgets and create <code>ROP</code> chains.
+<a href="#references">[3]</a></p>
+<h3 id="how-might-you-implement-a-similar-tool-yourself-high-level-overview"><a class="header" href="#how-might-you-implement-a-similar-tool-yourself-high-level-overview">How might you implement a similar tool yourself (high-level overview)?</a></h3>
+<p>A similar tool that could be implemented quickly would follow some of these
+steps:</p>
+<ul>
+<li>User specifies the instruction to search for.</li>
+<li>Dump the target binary or shared library into hex (using something like
+<code>xxd</code>).</li>
+<li>Use a regular expression to search for the opcode that represents <code>ret</code>:
+<code>0xc3</code>.</li>
+<li>Using the data returned from the results of this search, use another regular
+expression to search for the opcode representing the specific instruction
+requested by the user.</li>
+<li>Return the line number that contains the gadget we found to the user.</li>
+</ul>
+<p>A quick and dirty command line method to find a gadget sequence can be found
+in <a href="https://crypto.stanford.edu/%7Eblynn/rop/">this blog</a> on <code>ROP</code>.</p>
+<h2 id="references"><a class="header" href="#references">References</a></h2>
+<ol>
+<li><a href="https://github.com/JonathanSalwan/ROPgadget">https://github.com/JonathanSalwan/ROPgadget</a></li>
+<li><a href="https://github.com/sashs/Ropper">https://github.com/sashs/Ropper</a></li>
+<li><a href="https://docs.pwntools.com/en/stable/rop/rop.html">https://docs.pwntools.com/en/stable/rop/rop.html</a></li>
+<li><a href="https://hovav.net/ucsd/dist/rop.pdf">https://hovav.net/ucsd/dist/rop.pdf</a></li>
+<li><a href="https://www.csc2.ncsu.edu/faculty/xjiang4/pubs/ASIACCS11.pdf">https://www.csc2.ncsu.edu/faculty/xjiang4/pubs/ASIACCS11.pdf</a></li>
+<li><a href="https://crypto.stanford.edu/%7Eblynn/rop/">https://crypto.stanford.edu/~blynn/rop/</a></li>
+</ol>
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                            <a rel="prev" href="../return-oriented-programming/aslr-nx.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
+                            <a rel="next" href="../return-oriented-programming/calling-libc-functions-and-syscalls.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                    <a rel="prev" href="../return-oriented-programming/aslr-nx.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+                    <a rel="next" href="../return-oriented-programming/calling-libc-functions-and-syscalls.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+            </nav>
+
+        </div>
+
+        <!-- Livereload script (if served using the cli tool) -->
+        <script type="text/javascript">
+            var socket = new WebSocket("ws://localhost:3000/__livereload");
+            socket.onmessage = function (event) {
+                if (event.data === "reload") {
+                    socket.close();
+                    location.reload();
+                }
+            };
+
+            window.onbeforeunload = function() {
+                socket.close();
+            }
+        </script>
+        <script type="text/javascript">
+            window.playground_copyable = true;
+        </script>
+        <script src="../elasticlunr.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../mark.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../searcher.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../clipboard.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../highlight.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../book.js" type="text/javascript" charset="utf-8"></script>
+
+        <!-- Custom JS scripts -->
+    </body>
+</html>

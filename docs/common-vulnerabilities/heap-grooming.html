@@ -1,0 +1,308 @@
+<!DOCTYPE HTML>
+<html lang="en" class="sidebar-visible no-js ayu">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>Heap grooming - Introduction to the Dark Arts</title>
+        <!-- Custom HTML head -->
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff" />
+
+        <link rel="icon" href="../favicon.svg">
+        <link rel="shortcut icon" href="../favicon.png">
+        <link rel="stylesheet" href="../css/variables.css">
+        <link rel="stylesheet" href="../css/general.css">
+        <link rel="stylesheet" href="../css/chrome.css">
+        <link rel="stylesheet" href="../css/print.css" media="print">
+        <!-- Fonts -->
+        <link rel="stylesheet" href="../FontAwesome/css/font-awesome.css">
+        <link rel="stylesheet" href="../fonts/fonts.css">
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" href="../highlight.css">
+        <link rel="stylesheet" href="../tomorrow-night.css">
+        <link rel="stylesheet" href="../ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+    </head>
+    <body>
+        <!-- Provide site root to javascript -->
+        <script type="text/javascript">
+            var path_to_root = "../";
+            var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "navy" : "ayu";
+        </script>
+
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script type="text/javascript">
+            try {
+                var theme = localStorage.getItem('mdbook-theme');
+                var sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script type="text/javascript">
+            var theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            var html = document.querySelector('html');
+            html.classList.remove('no-js')
+            html.classList.remove('ayu')
+            html.classList.add(theme);
+            html.classList.add('js');
+        </script>
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script type="text/javascript">
+            var html = document.querySelector('html');
+            var sidebar = 'hidden';
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            }
+            html.classList.remove('sidebar-visible');
+            html.classList.add("sidebar-" + sidebar);
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <div class="sidebar-scrollbox">
+                <ol class="chapter"><li class="chapter-item expanded affix "><a href="../introduction.html">Introduction</a></li><li class="chapter-item expanded "><a href="../reverse-engineering/reverse-engineering.html"><strong aria-hidden="true">1.</strong> Reverse engineering</a><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../reverse-engineering/static-reverse-engineering.html"><strong aria-hidden="true">1.1.</strong> Static reverse Engineering</a></li><li class="chapter-item expanded "><a href="../reverse-engineering/dynamic-reverse-engineering.html"><strong aria-hidden="true">1.2.</strong> Dynamic reverse engineering</a></li><li class="chapter-item expanded "><a href="../reverse-engineering/dumb-fuzzing.html"><strong aria-hidden="true">1.3.</strong> Dumb fuzzing</a></li><li class="chapter-item expanded "><a href="../reverse-engineering/instrumentation.html"><strong aria-hidden="true">1.4.</strong> Instrumentation</a></li><li class="chapter-item expanded "><a href="../reverse-engineering/code-coverage-fuzzing.html"><strong aria-hidden="true">1.5.</strong> Coverage-based fuzzing</a></li><li class="chapter-item expanded "><a href="../reverse-engineering/symbolic-execution.html"><strong aria-hidden="true">1.6.</strong> Symbolic execution</a></li><li class="chapter-item expanded "><a href="../reverse-engineering/binary-diffing.html"><strong aria-hidden="true">1.7.</strong> Binary diffing</a></li><li class="chapter-item expanded "><a href="../reverse-engineering/binary-diffing-tools.html"><strong aria-hidden="true">1.8.</strong> Binary diffing tools</a></li></ol></li><li class="chapter-item expanded "><a href="../common-vulnerabilities/common-vulnerabilities.html"><strong aria-hidden="true">2.</strong> Common vulnerabilities</a><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../common-vulnerabilities/stack-buffer-overflow.html"><strong aria-hidden="true">2.1.</strong> Stack buffer overflow</a></li><li class="chapter-item expanded "><a href="../common-vulnerabilities/heap-buffer-overflow.html"><strong aria-hidden="true">2.2.</strong> Heap buffer overflow</a><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><a href="../common-vulnerabilities/house-of-force.html"><strong aria-hidden="true">2.2.1.</strong> House of Force</a></li><li class="chapter-item "><a href="../common-vulnerabilities/house-of-orange.html"><strong aria-hidden="true">2.2.2.</strong> House of Orange</a></li><li class="chapter-item "><a href="../common-vulnerabilities/single-byte-overflows.html"><strong aria-hidden="true">2.2.3.</strong> Single Byte Overflows</a></li></ol></li><li class="chapter-item expanded "><a href="../common-vulnerabilities/use-after-free.html"><strong aria-hidden="true">2.3.</strong> Use after free</a><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><a href="../common-vulnerabilities/fastbin-dup.html"><strong aria-hidden="true">2.3.1.</strong> Fastbin Dup</a></li><li class="chapter-item "><a href="../common-vulnerabilities/unsortedbin-attack.html"><strong aria-hidden="true">2.3.2.</strong> Unsortedbin Attack</a></li></ol></li><li class="chapter-item expanded "><a href="../common-vulnerabilities/heap-grooming.html" class="active"><strong aria-hidden="true">2.4.</strong> Heap grooming</a></li><li class="chapter-item expanded "><a href="../common-vulnerabilities/race-conditions.html"><strong aria-hidden="true">2.5.</strong> Race conditions</a></li></ol></li><li class="chapter-item expanded "><a href="../exploit-primitives/exploit-primitives.html"><strong aria-hidden="true">3.</strong> Exploit primitives</a><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../exploit-primitives/arbitrary-write-primitives.html"><strong aria-hidden="true">3.1.</strong> Arbitrary write primitives</a></li><li class="chapter-item expanded "><a href="../exploit-primitives/relative-write-primitives.html"><strong aria-hidden="true">3.2.</strong> Relative write primitives</a></li><li class="chapter-item expanded "><a href="../exploit-primitives/arbitrary-read-primitives.html"><strong aria-hidden="true">3.3.</strong> Arbitrary read primitives</a></li><li class="chapter-item expanded "><a href="../exploit-primitives/chaining-primitives.html"><strong aria-hidden="true">3.4.</strong> Chaining primitives</a></li><li class="chapter-item expanded "><a href="../exploit-primitives/escalating-privileges.html"><strong aria-hidden="true">3.5.</strong> Escalating privileges</a></li></ol></li><li class="chapter-item expanded "><a href="../return-oriented-programming/return-oriented-programming.html"><strong aria-hidden="true">4.</strong> Return oriented programming</a><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../return-oriented-programming/aslr-nx.html"><strong aria-hidden="true">4.1.</strong> ASLR/NX</a></li><li class="chapter-item expanded "><a href="../return-oriented-programming/finding-gadgets.html"><strong aria-hidden="true">4.2.</strong> Finding gadgets</a></li><li class="chapter-item expanded "><a href="../return-oriented-programming/calling-libc-functions-and-syscalls.html"><strong aria-hidden="true">4.3.</strong> Calling libc functions and syscalls</a></li><li class="chapter-item expanded "><a href="../return-oriented-programming/chaining-gadgets-to-execute-code.html"><strong aria-hidden="true">4.4.</strong> Chaining gadgets to execute code</a></li><li class="chapter-item expanded "><a href="../return-oriented-programming/executing-arbitrary-shellcode.html"><strong aria-hidden="true">4.5.</strong> Executing arbitrary shellcode</a></li></ol></li><li class="chapter-item expanded "><a href="../exploit-mitigations/exploit-mitigations.html"><strong aria-hidden="true">5.</strong> Exploit mitigations</a><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../exploit-mitigations/aslr.html"><strong aria-hidden="true">5.1.</strong> Address Space Layout Randomization (ASLR)</a></li><li class="chapter-item expanded "><a href="../exploit-mitigations/dep.html"><strong aria-hidden="true">5.2.</strong> Data Execution Prevention (DEP)/NX</a></li><li class="chapter-item expanded "><a href="../exploit-mitigations/position-independent-executables.html"><strong aria-hidden="true">5.3.</strong> Position Independent Executables (PIEs)</a></li><li class="chapter-item expanded "><a href="../exploit-mitigations/exploiting-pies.html"><strong aria-hidden="true">5.4.</strong> Exploiting PIEs</a></li><li class="chapter-item expanded "><a href="../exploit-mitigations/stack-canaries.html"><strong aria-hidden="true">5.5.</strong> Stack canaries</a></li><li class="chapter-item expanded "><a href="../exploit-mitigations/safe-list-unlinking.html"><strong aria-hidden="true">5.6.</strong> Safe list unlinking</a></li></ol></li></ol>
+            </div>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
+        </nav>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky bordered">
+                    <div class="left-buttons">
+                        <button id="sidebar-toggle" class="icon-button" type="button" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </button>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu (default)</button></li>
+                        </ul>
+                        <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
+                            <i class="fa fa-search"></i>
+                        </button>
+                    </div>
+
+                    <h1 class="menu-title">Introduction to the Dark Arts</h1>
+
+                    <div class="right-buttons">
+                        <a href="../print.html" title="Print this book" aria-label="Print this book">
+                            <i id="print-button" class="fa fa-print"></i>
+                        </a>
+                    </div>
+                </div>
+
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <input type="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script type="text/javascript">
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <main>
+                        <h1 id="heap-grooming"><a class="header" href="#heap-grooming">Heap grooming</a></h1>
+<p>Let's first define <strong>heap grooming</strong> by identifying that it's not
+<strong>heap spraying</strong>. While these two concepts are related, heap spraying is used
+to make other exploitation techniques more reliable. Heap spraying gained
+popularity starting in 2001, and is primarily used to store code in a reliable
+location when attempting to gain code execution. <a href="#references">[1]</a></p>
+<p><strong>Heap grooming</strong> or <strong>heap feng shui</strong> or <strong>heap shaping</strong> is a more nuanced
+technique that attempts to shape the heap in a manner that allows for follow
+on exploitation by the attacker. The use of this technique is pivotal to
+improving the reliability of using heap memory corruption for exploitation. For
+example, in order to use a heap overflow to create the conditions for
+overlapping chunks or a Use-after-free (UAF) vulnerability, the attacker might
+want to have chunks of specific sizes in specific locations or have program
+data structures in advantageous locations for sensitive information leaks, etc.</p>
+<h2 id="examples"><a class="header" href="#examples">Examples</a></h2>
+<h3 id="heap-feng-shui-in-javascript"><a class="header" href="#heap-feng-shui-in-javascript">Heap Feng Shui in Javascript</a></h3>
+<p>First, we'll start with <a href="#references">this BlackHat</a> talk by Alexander Sotirov.
+It's actually pretty awesome that something this intense was discussed as early
+as 2007. Alexander's talk begins with a description of heap spraying, but shows
+that, while heap spraying is useful, it's still unreliable - we need the heap
+to be in a deterministic state to achieve reliable exploitation.</p>
+<p>His <strong>Heap Feng Shui</strong> portion of the talk discusses how the heap allocator is
+deterministic in nature. The attacker must coerce the program to execute a
+series of allocations and frees until he deterministically controls important
+locations in the heap. Eventually, he demonstrates that the attacker can place
+malicious bytes onto the heap in a repeated nature, coerce the program to free
+his allocated chunks, and then, when the program resumes a different
+subroutine and allocates the recently <code>free()</code>d chunks, the attacker can
+exploit an unitialized variable vulnerability to gain code execution.</p>
+<p>He goes on to discuss how the memory allocator works for Javascript / Internet
+Explorer and his creation of a library that allows him to log, debug, allocate,
+and free heap chunks of arbitrary size and contents within the Javascript /
+Internet Explorer heap.</p>
+<h3 id="grooming-the-ios-kernel-heap"><a class="header" href="#grooming-the-ios-kernel-heap">Grooming the iOS Kernel Heap</a></h3>
+<p>Next, we'll talk about
+<a href="#references">Azeria's discussion on grooming the iOS kernel heap</a>. In this
+real world example, she demonstrates the exploitation of a one byte, heap
+overflow vulnerability to gain a UAF that allows her to leak sensitive
+information from program memory.</p>
+<p>In this example, Azeria discusses that the state of the heap before
+exploitation is fragmented, with free and allocated chunks sparsely strewn
+about the heap. She coerces the application to fill the &quot;gaps&quot; in the heap by
+allocating objects until the freelist is empty. Subsequent allocations will
+then start at the highest address of the heap where she begins to create a
+series of &quot;exploit zones&quot;, comprised of victim objects and placeholder objects.
+The victim objects will be used to overflow into succeeding objects on the
+heap. She <code>free()</code>s all of the placeholder objects in quick succession, linking
+them into the freelist. When the kernel allocates her target objects that she
+wishes to overflow into, the new allocations will be adjacent to the victim
+objects.</p>
+<p>Using <strong>heap grooming</strong>, Azeria demonstrates that an attacker can coerce the
+allocator into placing victim objects next to sensitive kernel objects on the
+heap in order to corrupt heap memory, leading to a sensitive information
+disclosure.</p>
+<h3 id="chrome-os-exploit-one-byte-overflow-and-symlinks"><a class="header" href="#chrome-os-exploit-one-byte-overflow-and-symlinks">Chrome OS exploit: one byte overflow and symlinks</a></h3>
+<p><code>shill</code>, the Chrome OS network manager, had a one byte heap overflow in its
+DNS library. Attackers could communicate with the library using an HTTP proxy
+that was listening on <code>localhost</code>. The author demonstrates his use of
+<strong>heap grooming</strong> to ensure that the memory layout of the vulnerable process
+remained predictable so that he could reliably place allocations in the same
+location in heap memory.</p>
+<p>The author demonstrates that, upon each connection, four allocations are
+conducted by the program to hold program data on the heap. When the connection
+closes, however, the middle <code>0x820</code> bytes in these four allocations are
+<code>free()</code>d and consolidated, and the two still allocated chunks protect the
+free <code>0x820</code> chunk from being further consolidated or modified.</p>
+<p>The author goes on to explain that, in order to continue to reliably use this
+<code>0x820</code> chunk of memory to obtain overlapping chunks, he has to coerce the
+program to conduct &quot;tons of small allocations&quot; in order to empty the freelist.
+Finally, subsequent allocations allow him to reliably use his <code>0x820</code> chunk of
+memory, eventually conducting a heap buffer overflow to shrink a free chunk
+causing a future <code>free()</code> operation on a succeeding chunk to overlap an
+allocated chunk. <a href="#references">[4]</a></p>
+<h2 id="malloc-tunables"><a class="header" href="#malloc-tunables">Malloc tunables</a></h2>
+<p>A listing of <code>malloc</code> tunables can be found <a href="#references">here</a>. There's not
+much documentation on how <code>malloc</code> tunables can affect exploitation methods,
+or my Google-Fu is probably just not good enough. Either way, in this section
+I'll wargame some <code>malloc</code> tunable changes that could possibly bring about
+interesting changes to how we approach heap exploitation.</p>
+<h3 id="glibcmalloctcache_count-and-glibcmalloctache_max"><a class="header" href="#glibcmalloctcache_count-and-glibcmalloctache_max"><code>glibc.malloc.tcache_count</code> and <code>glibc.malloc.tache_max</code></a></h3>
+<p>These two tunables are interesting if we know that the target <code>glibc</code> uses
+<code>tcache</code>s. If I knew that the vulnerable program was vulnerable to a double
+free, I would probably go for a Fastbin Dup attack. The default number of
+chunks that get linked into the <code>tcache</code> is <code>7</code>, however, if this was modified
+to be something else, we'd have to do some debugging in production conditions
+to determine the <code>tcache_count</code>. This tunable would affect the number of chunks
+I <code>free()</code> in order to fill the <code>tcache</code> before I attempt to abuse the fastbin.</p>
+<p><code>tcache_max</code> could also affect any attempts to go after heap metadata for
+chunks linked into the unsortedbin. If <code>tcache_max</code>'s size overlapped with
+sizes that are usually used for the unsortedbin, I would have to ensure that
+the <code>tcache</code> is full before attempting to link chunks into the unsortedbin.</p>
+<h3 id="glibcmallocarena_max-and-malloc_arena_max"><a class="header" href="#glibcmallocarena_max-and-malloc_arena_max"><code>glibc.malloc.arena_max</code> and <code>MALLOC_ARENA_MAX</code></a></h3>
+<p>The <code>glibc.malloc.arena_max</code> tunable overrides anything set by
+<code>MALLOC_ARENA_MAX</code>, but they achieve the same outcome. These two tunables set
+the maximum number of arenas that can be used by the process across all threads
+. For 32-bit systems, this value is twice the number of cores online and for
+64-bit systems, this value is 8 times the number of cores online.</p>
+<p>This is important if we're attempting to exploit the heap of a vulnerable
+program that leverages multi-threaded operations. <code>MALLOC_ARENA_MAX</code> increases
+the number of available memory pools that threads can allocate memory from.
+A higher number of arenas helps to prevent thread contention for heap
+resources as each thread has to lock the arena before allocating or <code>free()</code>ing
+memory.</p>
+<p>If we have local access to the vulnerable application, we can modify the
+<code>MALLOC_ARENA_MAX</code> environment variable and set it to <code>1</code>. This forces each
+thread of our target program to use the same arena, allowing us to possibly
+exploit race conditions that might be present, or it could just make grooming
+the heap easier. Either way, it's important to keep in mind how many arenas are
+present when exploiting a program that leverages multi-threading as this will
+guide our approach on how to effectively groom the heap across multiple arenas.</p>
+<h2 id="references"><a class="header" href="#references">References</a></h2>
+<ol>
+<li><a href="https://seclists.org/bugtraq/2001/Jul/533">https://seclists.org/bugtraq/2001/Jul/533</a></li>
+<li><a href="https://www.blackhat.com/presentations/bh-europe-07/Sotirov/Presentation/bh-eu-07-sotirov-apr19.pdf">https://www.blackhat.com/presentations/bh-europe-07/Sotirov/Presentation/bh-eu-07-sotirov-apr19.pdf</a></li>
+<li><a href="https://azeria-labs.com/grooming-the-ios-kernel-heap/">https://azeria-labs.com/grooming-the-ios-kernel-heap/</a></li>
+<li><a href="https://googleprojectzero.blogspot.com/2016/12/chrome-os-exploit-one-byte-overflow-and.html">https://googleprojectzero.blogspot.com/2016/12/chrome-os-exploit-one-byte-overflow-and.html</a></li>
+<li><a href="https://www.gnu.org/software/libc/manual/html_node/Memory-Allocation-Tunables.html">https://www.gnu.org/software/libc/manual/html_node/Memory-Allocation-Tunables.html</a></li>
+</ol>
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                            <a rel="prev" href="../common-vulnerabilities/unsortedbin-attack.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
+                            <a rel="next" href="../common-vulnerabilities/race-conditions.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                    <a rel="prev" href="../common-vulnerabilities/unsortedbin-attack.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+                    <a rel="next" href="../common-vulnerabilities/race-conditions.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+            </nav>
+
+        </div>
+
+        <!-- Livereload script (if served using the cli tool) -->
+        <script type="text/javascript">
+            var socket = new WebSocket("ws://localhost:3000/__livereload");
+            socket.onmessage = function (event) {
+                if (event.data === "reload") {
+                    socket.close();
+                    location.reload();
+                }
+            };
+
+            window.onbeforeunload = function() {
+                socket.close();
+            }
+        </script>
+        <script type="text/javascript">
+            window.playground_copyable = true;
+        </script>
+        <script src="../elasticlunr.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../mark.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../searcher.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../clipboard.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../highlight.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../book.js" type="text/javascript" charset="utf-8"></script>
+
+        <!-- Custom JS scripts -->
+    </body>
+</html>

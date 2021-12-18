@@ -1,0 +1,416 @@
+<!DOCTYPE HTML>
+<html lang="en" class="sidebar-visible no-js ayu">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>Chaining gadgets to execute code - Introduction to the Dark Arts</title>
+        <!-- Custom HTML head -->
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff" />
+
+        <link rel="icon" href="../favicon.svg">
+        <link rel="shortcut icon" href="../favicon.png">
+        <link rel="stylesheet" href="../css/variables.css">
+        <link rel="stylesheet" href="../css/general.css">
+        <link rel="stylesheet" href="../css/chrome.css">
+        <link rel="stylesheet" href="../css/print.css" media="print">
+        <!-- Fonts -->
+        <link rel="stylesheet" href="../FontAwesome/css/font-awesome.css">
+        <link rel="stylesheet" href="../fonts/fonts.css">
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" href="../highlight.css">
+        <link rel="stylesheet" href="../tomorrow-night.css">
+        <link rel="stylesheet" href="../ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+    </head>
+    <body>
+        <!-- Provide site root to javascript -->
+        <script type="text/javascript">
+            var path_to_root = "../";
+            var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "navy" : "ayu";
+        </script>
+
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script type="text/javascript">
+            try {
+                var theme = localStorage.getItem('mdbook-theme');
+                var sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script type="text/javascript">
+            var theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            var html = document.querySelector('html');
+            html.classList.remove('no-js')
+            html.classList.remove('ayu')
+            html.classList.add(theme);
+            html.classList.add('js');
+        </script>
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script type="text/javascript">
+            var html = document.querySelector('html');
+            var sidebar = 'hidden';
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            }
+            html.classList.remove('sidebar-visible');
+            html.classList.add("sidebar-" + sidebar);
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <div class="sidebar-scrollbox">
+                <ol class="chapter"><li class="chapter-item expanded affix "><a href="../introduction.html">Introduction</a></li><li class="chapter-item expanded "><a href="../reverse-engineering/reverse-engineering.html"><strong aria-hidden="true">1.</strong> Reverse engineering</a><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../reverse-engineering/static-reverse-engineering.html"><strong aria-hidden="true">1.1.</strong> Static reverse Engineering</a></li><li class="chapter-item expanded "><a href="../reverse-engineering/dynamic-reverse-engineering.html"><strong aria-hidden="true">1.2.</strong> Dynamic reverse engineering</a></li><li class="chapter-item expanded "><a href="../reverse-engineering/dumb-fuzzing.html"><strong aria-hidden="true">1.3.</strong> Dumb fuzzing</a></li><li class="chapter-item expanded "><a href="../reverse-engineering/instrumentation.html"><strong aria-hidden="true">1.4.</strong> Instrumentation</a></li><li class="chapter-item expanded "><a href="../reverse-engineering/code-coverage-fuzzing.html"><strong aria-hidden="true">1.5.</strong> Coverage-based fuzzing</a></li><li class="chapter-item expanded "><a href="../reverse-engineering/symbolic-execution.html"><strong aria-hidden="true">1.6.</strong> Symbolic execution</a></li><li class="chapter-item expanded "><a href="../reverse-engineering/binary-diffing.html"><strong aria-hidden="true">1.7.</strong> Binary diffing</a></li><li class="chapter-item expanded "><a href="../reverse-engineering/binary-diffing-tools.html"><strong aria-hidden="true">1.8.</strong> Binary diffing tools</a></li></ol></li><li class="chapter-item expanded "><a href="../common-vulnerabilities/common-vulnerabilities.html"><strong aria-hidden="true">2.</strong> Common vulnerabilities</a><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../common-vulnerabilities/stack-buffer-overflow.html"><strong aria-hidden="true">2.1.</strong> Stack buffer overflow</a></li><li class="chapter-item expanded "><a href="../common-vulnerabilities/heap-buffer-overflow.html"><strong aria-hidden="true">2.2.</strong> Heap buffer overflow</a><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><a href="../common-vulnerabilities/house-of-force.html"><strong aria-hidden="true">2.2.1.</strong> House of Force</a></li><li class="chapter-item "><a href="../common-vulnerabilities/house-of-orange.html"><strong aria-hidden="true">2.2.2.</strong> House of Orange</a></li><li class="chapter-item "><a href="../common-vulnerabilities/single-byte-overflows.html"><strong aria-hidden="true">2.2.3.</strong> Single Byte Overflows</a></li></ol></li><li class="chapter-item expanded "><a href="../common-vulnerabilities/use-after-free.html"><strong aria-hidden="true">2.3.</strong> Use after free</a><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><a href="../common-vulnerabilities/fastbin-dup.html"><strong aria-hidden="true">2.3.1.</strong> Fastbin Dup</a></li><li class="chapter-item "><a href="../common-vulnerabilities/unsortedbin-attack.html"><strong aria-hidden="true">2.3.2.</strong> Unsortedbin Attack</a></li></ol></li><li class="chapter-item expanded "><a href="../common-vulnerabilities/heap-grooming.html"><strong aria-hidden="true">2.4.</strong> Heap grooming</a></li><li class="chapter-item expanded "><a href="../common-vulnerabilities/race-conditions.html"><strong aria-hidden="true">2.5.</strong> Race conditions</a></li></ol></li><li class="chapter-item expanded "><a href="../exploit-primitives/exploit-primitives.html"><strong aria-hidden="true">3.</strong> Exploit primitives</a><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../exploit-primitives/arbitrary-write-primitives.html"><strong aria-hidden="true">3.1.</strong> Arbitrary write primitives</a></li><li class="chapter-item expanded "><a href="../exploit-primitives/relative-write-primitives.html"><strong aria-hidden="true">3.2.</strong> Relative write primitives</a></li><li class="chapter-item expanded "><a href="../exploit-primitives/arbitrary-read-primitives.html"><strong aria-hidden="true">3.3.</strong> Arbitrary read primitives</a></li><li class="chapter-item expanded "><a href="../exploit-primitives/chaining-primitives.html"><strong aria-hidden="true">3.4.</strong> Chaining primitives</a></li><li class="chapter-item expanded "><a href="../exploit-primitives/escalating-privileges.html"><strong aria-hidden="true">3.5.</strong> Escalating privileges</a></li></ol></li><li class="chapter-item expanded "><a href="../return-oriented-programming/return-oriented-programming.html"><strong aria-hidden="true">4.</strong> Return oriented programming</a><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../return-oriented-programming/aslr-nx.html"><strong aria-hidden="true">4.1.</strong> ASLR/NX</a></li><li class="chapter-item expanded "><a href="../return-oriented-programming/finding-gadgets.html"><strong aria-hidden="true">4.2.</strong> Finding gadgets</a></li><li class="chapter-item expanded "><a href="../return-oriented-programming/calling-libc-functions-and-syscalls.html"><strong aria-hidden="true">4.3.</strong> Calling libc functions and syscalls</a></li><li class="chapter-item expanded "><a href="../return-oriented-programming/chaining-gadgets-to-execute-code.html" class="active"><strong aria-hidden="true">4.4.</strong> Chaining gadgets to execute code</a></li><li class="chapter-item expanded "><a href="../return-oriented-programming/executing-arbitrary-shellcode.html"><strong aria-hidden="true">4.5.</strong> Executing arbitrary shellcode</a></li></ol></li><li class="chapter-item expanded "><a href="../exploit-mitigations/exploit-mitigations.html"><strong aria-hidden="true">5.</strong> Exploit mitigations</a><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../exploit-mitigations/aslr.html"><strong aria-hidden="true">5.1.</strong> Address Space Layout Randomization (ASLR)</a></li><li class="chapter-item expanded "><a href="../exploit-mitigations/dep.html"><strong aria-hidden="true">5.2.</strong> Data Execution Prevention (DEP)/NX</a></li><li class="chapter-item expanded "><a href="../exploit-mitigations/position-independent-executables.html"><strong aria-hidden="true">5.3.</strong> Position Independent Executables (PIEs)</a></li><li class="chapter-item expanded "><a href="../exploit-mitigations/exploiting-pies.html"><strong aria-hidden="true">5.4.</strong> Exploiting PIEs</a></li><li class="chapter-item expanded "><a href="../exploit-mitigations/stack-canaries.html"><strong aria-hidden="true">5.5.</strong> Stack canaries</a></li><li class="chapter-item expanded "><a href="../exploit-mitigations/safe-list-unlinking.html"><strong aria-hidden="true">5.6.</strong> Safe list unlinking</a></li></ol></li></ol>
+            </div>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
+        </nav>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky bordered">
+                    <div class="left-buttons">
+                        <button id="sidebar-toggle" class="icon-button" type="button" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </button>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu (default)</button></li>
+                        </ul>
+                        <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
+                            <i class="fa fa-search"></i>
+                        </button>
+                    </div>
+
+                    <h1 class="menu-title">Introduction to the Dark Arts</h1>
+
+                    <div class="right-buttons">
+                        <a href="../print.html" title="Print this book" aria-label="Print this book">
+                            <i id="print-button" class="fa fa-print"></i>
+                        </a>
+                    </div>
+                </div>
+
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <input type="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script type="text/javascript">
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <main>
+                        <h1 id="chaining-gadgets-to-execute-code"><a class="header" href="#chaining-gadgets-to-execute-code">Chaining gadgets to execute code</a></h1>
+<h2 id="creating-a-rop-chain-on-x86"><a class="header" href="#creating-a-rop-chain-on-x86">Creating a ROP chain on x86</a></h2>
+<p>Cool, so now we know how to call one <code>libc</code> function, let's call multiple.
+Let's assume I have a file I want to read the contents of and the name of the
+file is already within memory. I have full control of the <code>stack</code> and the
+<code>EIP</code>/<code>RIP</code>. We crafted a <code>stack</code> frame to call <code>system()</code> with the argument
+<code>'/bin/sh'</code> in the previous section. How do we craft a <code>stack</code> frame that calls
+<code>open()</code> to open a file descriptor with our target file, <code>read()</code> to read the
+data within the file into memory, and then <code>write()</code> to write the data to
+<code>stdout</code>?</p>
+<p>Again, we assume that the attacker has used an information leak to expose
+sensitive information allowing them to discover the base of <code>libc</code> in memory.
+The attacker also knows the location of the <code>filename_ptr</code> in memory.</p>
+<p>Here's an example stack frame to accomplish this in <code>x86</code>:</p>
+<pre><code class="language-python">p32(open_sym)           # address of open() function within libc
+p32(pop_pop_pop_ret)    # pop %; pop %; pop %; ret gadget
+p32(filename_ptr)       # arg0: pointer to filename string
+p32(0x0)                # arg1: O_RDONLY
+p32(0x0)                # arg2: 0 for mode
+p32(read_sym)           # address of read() function within libc
+p32(pop_pop_pop_ret)    # pop %; pop %; pop %; ret gadget
+p32(0x3)                # arg0: assume fd of the target is 3
+p32(initial)            # arg1: initial data structure in libc (rw-)
+p32(1024)               # arg2: num of bytes to read from fd 3
+p32(write_sym)          # address of write() function within libc
+p32(pop_pop_pop_ret)    # pop %; pop %; pop %; ret gadget
+p32(0x1)                # arg0: fd 1 (stdout)
+p32(initial)            # arg1: initial data structure with our file content
+p32(1024)               # arg2: num of bytes to write to fd 1 (stdout)
+p32(exit_sym)           # address of exit() function within libc
+</code></pre>
+<p><strong>So what's happening in this stack frame?</strong></p>
+<p>When the attacker overwrites the stack frame of the vulnerable function with
+the code in this example, the vulnerable function will <code>ret</code> into our first
+function call: <code>open()</code>. <code>open()</code> is going to use the <code>filename_ptr</code> for its
+first argument (<code>const char *pathname</code>), <code>0x0</code> (<code>O_RDONLY</code>) for its second
+argument (<code>int flags</code>), and <code>0x0</code> for its third argument (<code>mode_t mode</code>).</p>
+<p>If the <code>open()</code> function is successful, <code>eax</code> will contain the file descriptor
+of the now open file pointed to by <code>filename_ptr</code> - in this example we're
+assuming the file descriptor is <code>3</code>. Next, we use a <code>pop %; pop %; pop %; ret</code>
+gadget to <code>pop</code> our arguments to <code>open()</code> off of the stack. The operand for
+these <code>pop %</code> instructions doesn't really matter, so long as it's not <code>ESP</code>.</p>
+<p>The <code>pop %; pop %; pop %; ret</code> gadget will now <code>ret</code> into our <code>read()</code> address
+on the <code>stack</code>, <code>pop</code>ing the word off of the <code>stack</code> and executing <code>libc</code>'s
+<code>read()</code> function. <code>read()</code> is going to use <code>0x3</code> for its first argument
+(<code>int fd</code>), <code>initial</code> for its second argument (<code>void* buf</code>), and <code>1024</code> for
+its third argument (<code>size_t count</code>). If the <code>read()</code> function is successful,
+<code>eax</code> will contain the number of bytes read from the file. We <code>ret</code> into our
+gadget to <code>pop</code> all of <code>read()</code>'s arguments off the <code>stack</code>, then we <code>ret</code>
+into our <code>write()</code> call.</p>
+<p><code>write()</code> is going to use <code>0x1</code> (<code>stdout</code>) for its first argument (<code>int fd</code>),
+<code>initial</code> for its second argument (<code>const void *buf</code>), and <code>1024</code> for its third
+argument (<code>size_t count</code>). If the <code>write()</code> function is successful, <code>eax</code> will
+contain the number of bytes that was written to <code>stdout</code>. We <code>ret</code> into our
+gadget and <code>pop</code> all of <code>write</code>'s arguments off the <code>stack</code>, then we <code>ret</code> into
+our <code>exit()</code> call.</p>
+<h3 id="can-you-explain-in-greater-detail-why-pop--pop--ret-esque-gadgets-are-needed-for-building-rop-chains-on-x86"><a class="header" href="#can-you-explain-in-greater-detail-why-pop--pop--ret-esque-gadgets-are-needed-for-building-rop-chains-on-x86">Can you explain in greater detail why <code>pop %; pop %; ret</code>-esque gadgets are needed for building ROP chains on x86?</a></h3>
+<p>If we didn't use a <code>pop %; pop %; pop %; ret</code> gadget to clear our function
+arguments off of the <code>stack</code>, the <code>stack</code> frame would look something like this:</p>
+<pre><code class="language-python">p32(open_sym)
+p32(read_sym)
+p32(filename_ptr)
+p32(0x0)
+p32(0x0)
+</code></pre>
+<p><strong>So what's the problem here?</strong></p>
+<p>When <code>open()</code> finishes, we'll <code>ret</code> into our <code>read()</code> call. This isn't going
+to work out well for us though because <code>read()</code>'s arguments don't make any
+sense now. Our first argument for <code>read()</code> points to a <code>null</code> byte, which isn't
+a <code>filename_ptr</code>.</p>
+<p>It's necessary for us to use <code>pop %; pop %; pop %; ret</code> gadgets in order to
+clear the previous function call's arguments from the stack. These gadgets
+allow us to effectively chain multiple function calls. <a href="#references">[1]</a></p>
+<h2 id="creating-a-rop-chain-on-x86-64"><a class="header" href="#creating-a-rop-chain-on-x86-64">Creating a ROP chain on x86-64</a></h2>
+<p>Let's do the same <code>open()</code>, <code>read()</code>, <code>write()</code>, <code>exit()</code> <code>ROP</code> chain on
+<code>x86-64</code>:</p>
+<pre><code class="language-python">p64(pop_rdi_ret)            # load filename_ptr into rdi
+p64(filename_ptr)           # arg0: pointer to filename string
+p64(pop_rsi_pop_r15_ret)    # load flags into rsi
+p64(0x0)                    # arg1: O_RDONLY
+p64(0xcafebabe)             # dummy bytes loaded into r15
+p64(pop_rdx_ret)            # load mode into rdx
+p64(0x0)                    # arg2: 0 for mode
+p64(open_sym)               # address of open() function within libc
+p64(pop_rdi_ret)            # load fd into rdi
+p64(0x3)                    # arg0: assume fd of the target is 3
+p64(pop_rsi_pop_r15_ret)    # load initial into rsi
+p64(initial)                # arg1: initial data structure in libc (rw-)
+p64(0xcafebabe)             # dummy bytes loaded into r15
+p64(pop_rdx_ret)            # load num of bytes to read into rdx
+p64(1024)                   # arg2: num of bytes to read from fd 3
+p64(read_sym)               # address of read() function within libc
+p64(pop_rdi_ret)            # load fd 1 (stdout) into rdi
+p64(0x1)                    # arg0: fd 1(stdout)
+p64(pop_rsi_pop_r15_ret)    # load initial into rsi
+p64(initial)                # arg1: initial data structure with file content
+p64(0xcafebabe)             # dummy bytes loaded into r15
+p64(pop_rdx_ret)            # load num of bytes to write into rdx
+p64(1024)                   # arg2: num of bytes to write to fd 1 (stdout)
+p64(write_sym)              # address of write() function within libc
+p64(exit_sym)               # address of exit() function within libc
+</code></pre>
+<p><strong>So what's happening in this stack frame?</strong></p>
+<p>The operations that take place within this <code>stack</code> frame are exactly the same
+as what took place in the <code>x86</code> example, we're just using <code>ROP</code> gadgets to
+ensure that we're following the <code>x86-64</code> calling convention. Each <code>pop %; ret</code>
+gadget is <code>pop</code>ing our arguments from the <code>stack</code> into the correct registers
+for each <code>libc</code> function call. You can see that not everything is perfect,
+though. The <code>pop rsi; pop r15; ret</code> gadget is <code>pop</code>ing a dummy value from the
+<code>stack</code> into <code>r15</code>. We're not always going to find the perfect gadget to
+<code>pop %</code> just one value into our target register - we have to make due with
+what's available.</p>
+<h2 id="creating-a-rop-chain-to-execute-syscalls-on-x86-and-x86-64"><a class="header" href="#creating-a-rop-chain-to-execute-syscalls-on-x86-and-x86-64">Creating a ROP chain to execute syscalls on x86 and x86-64</a></h2>
+<p>Alright, so now that we understand how to chain gadgets to make multiple <code>libc</code>
+calls, here are some examples of <code>ROP</code> chains that execute <code>syscall</code>s in <code>x86</code>
+and <code>x86-64</code>.</p>
+<p>Here's an example <code>ROP</code> chain that executes
+<code>sys_open(filename_ptr, O_RDONLY, 0)</code> in <code>x86</code>:</p>
+<pre><code class="language-python">p32(pop_ebx_ret)    # load filename_ptr into ebx
+p32(filename_ptr)   # arg0: pointer to filename string
+p32(pop_ecx_ret)    # load flags into ecx
+p32(0x0)            # arg1: O_RDONLY 
+p32(pop_edx_ret)    # load mode into edx
+p32(0x0)            # arg2: 0 for mode
+p32(pop_eax_ret)    # load syscall number into eax
+p32(0x5)            # syscall number for sys_open
+p32(int_80_ret)     # int 0x80; ret gadget
+</code></pre>
+<p>Here's an example <code>ROP</code> chain that executes
+<code>sys_open(filename_ptr, O_RDONLY, 0)</code> in <code>x86-64</code>:</p>
+<pre><code class="language-python">p64(pop_rdi_ret)    # load filename_ptr into rdi
+p64(filename_ptr)   # arg0: pointer to filename string
+p64(pop_rsi_ret)    # load flags into rsi
+p64(0x0)            # arg1: O_RDONLY 
+p64(pop_rdx_ret)    # load mode into rdx
+p32(0x0)            # arg2: 0 for mode
+p32(pop_rax_ret)    # load syscall number into rax
+p64(0x2)            # syscall number for sys_open
+p64(syscall)        # syscall; ret
+</code></pre>
+<p>As you've probably noticed these two <code>ROP</code> chains seem super simple and super
+similiar, but it won't always be that way. As I said earlier, creating a <code>ROP</code>
+chain is a test of creativity, and you won't always be able to load your
+registers with simple <code>pop %; ret</code> gadgets.</p>
+<h3 id="how-might-one-combine-multiple-gadgets-into-one-register-populating-pseudo-gadget-what-are-some-useful-non-pop-instructions-for-doing-this-in-amd64"><a class="header" href="#how-might-one-combine-multiple-gadgets-into-one-register-populating-pseudo-gadget-what-are-some-useful-non-pop-instructions-for-doing-this-in-amd64">How might one combine multiple gadgets into one register-populating pseudo-gadget? What are some useful non-pop instructions for doing this in amd64?</a></h3>
+<p>You can definitely find gadgets that will <code>pop</code> all of your necessary arguments
+into their respective registers. If we found something like:
+<code>pop rdi; pop rsi; pop rdx; ret</code> in code, we could use this gadget before
+making our <code>read()</code>, <code>write()</code>, and <code>open()</code> calls. <a href="#references">[2]</a></p>
+<p>In <code>x86</code>, there's an interesting instruction called <code>popa</code>/<code>popad</code> that <code>pop</code>s
+data into all general-purpose registers. This is definitely useful if you need
+to intialize all of your registers prior to executing further code.
+<a href="#references">[3]</a></p>
+<p><strong>So what if I can't find a pop instruction for my target register?</strong></p>
+<p>If you can't find a <code>pop</code> instruction to directly load a register, you still
+might have some options if you use <code>xor</code> and <code>xchg</code>.</p>
+<p>The concept in using <code>xor</code> to load a register is as follows <a href="#references">[2]</a>:</p>
+<ol>
+<li><code>xor</code> your target register against itself to zero it out.</li>
+<li><code>pop</code> the data you want to load into a different register.</li>
+<li><code>xor</code> your target register against the other register, duplicating the data
+into your target register.</li>
+</ol>
+<p>The concept in using <code>xchg</code> to load a register is as follows
+<a href="#references">[2]</a>:</p>
+<ol>
+<li><code>pop</code> the data you want to load into a different register.</li>
+<li>execute an <code>xchg</code> with your target register and the register containing your
+data.</li>
+</ol>
+<p><strong>Using the <code>xchg</code> method will swap the data between the two registers. Ensure
+you reload the register you used to execute <code>xchg</code> if you intend to use it
+later.</strong></p>
+<p>The <code>mov %, %; ret</code> gadget is also a viable method to load target registers.
+Generating <code>ROP</code> chains to create exploits is just a test of the exploiter's
+creativity.</p>
+<h2 id="under-what-conditions-would-one-need-to-stack-pivot-what-are-some-locations-an-attacker-could-store-a-second-stage-chain-for-use-in-a-stack-pivot"><a class="header" href="#under-what-conditions-would-one-need-to-stack-pivot-what-are-some-locations-an-attacker-could-store-a-second-stage-chain-for-use-in-a-stack-pivot">Under what conditions would one need to stack pivot? What are some locations an attacker could store a second-stage chain for use in a stack pivot?</a></h2>
+<p>These <code>ROP</code> chains can get pretty long, sometimes we might not be able to write
+more than a handful of words to the <code>stack</code>. In these conditions, we'll have to
+conduct a <code>stack</code> pivot.</p>
+<p>A <code>stack</code> pivot is a technique that relocates the <code>stack</code> to some other
+location in memory. This allows us to completely control the contents of the
+<code>stack</code>, and this is where we can place more words for our <code>ROP</code> chain. When
+we pivot the <code>stack</code> to our new location, we can continue executing our <code>ROP</code>
+chain without any of the pesky restrictions we faced on the original <code>stack</code>.</p>
+<p>In order to pivot the <code>stack</code>, we <code>pop</code> the location containing the rest of
+our <code>ROP</code> chain into the <code>ESP</code>/<code>RSP</code> register. Then, when our <code>pop rsp; ret</code>
+gadget executes <code>ret</code>, the <code>stack</code> will be pointing to the location in memory
+containing our second stage <code>ROP</code> chain.</p>
+<p>An attacker could place a second stage <code>ROP</code> chain in any know read/writeable
+location in memory. These locations could include the <code>heap</code>, the <code>stack</code>, a
+buffer in <code>.bss</code> or <code>.data</code>, or (my personal favorite) <code>libc</code>'s <code>initial</code> data
+structure. <a href="#references">[2]</a></p>
+<h3 id="im-not-familiar-with-the-initial-libc-structure-can-you-explain-what-it-is"><a class="header" href="#im-not-familiar-with-the-initial-libc-structure-can-you-explain-what-it-is">I'm not familiar with the initial libc structure, can you explain what it is?</a></h3>
+<p><code>initial</code> is a data section within <code>libc</code> that is read/writeable. If you know
+the base of <code>libc</code> within memory and you know the version of <code>libc</code> being used
+by a target program, you can determine the location of <code>libc</code>'s <code>initial</code> data
+structure within memory. It's a useful location to store file data that's been
+read into memory, or second-stage <code>ROP</code> chains because the data strucuture is
+usually empty.</p>
+<p>The <code>initial</code> data structure is used by the <code>libc</code> function <code>atexit()</code> to store
+a list of function pointers that will be called when <code>exit()</code> is called. In the
+<code>Left</code> challenge from <strong>0x00 CTF 2017</strong>, the <code>initial</code> data structure plays a
+role in gaining control of the <code>RIP</code>.</p>
+<p>Function pointers within <code>initial</code> are <code>xor</code>d with some secret in thread-local
+storage (TLS) and then rotated left 17 bits. In the <code>Left</code> challenge the
+attacker needs to expose an entry within <code>initial</code>, derive the secret from the
+entry, and then replace the entry in <code>initial</code> with a <code>one_gadget</code>. Then, when
+<code>exit()</code> is called, the <code>one_gadget</code> is executed. This technique was
+necessary because the target program had <code>Full RELRO</code> protections enabled,
+preventing the attacker from overwriting a <code>.got.plt</code> entry.
+<a href="#references">[4]</a></p>
+<p>All that being said, yes if you know the location of <code>.data</code> or <code>.bss</code> within
+the program it's just as easy to write your second-stage <code>ROP</code> chain there.
+However, if the program has the <code>PIE</code> protection mechanism enabled and you
+don't feel like deriving the base of the program within memory, <code>initial</code> is
+another read/writeable location that can be easily derived from the base of
+<code>libc</code>. Use this location at your own discretion though, especially if some
+information contained with <code>initial</code> seems important.</p>
+<h3 id="references"><a class="header" href="#references">References</a></h3>
+<ol>
+<li><a href="https://hovav.net/ucsd/dist/blackhat08.pdf">https://hovav.net/ucsd/dist/blackhat08.pdf</a></li>
+<li><a href="https://trustfoundry.net/basic-rop-techniques-and-tricks/">https://trustfoundry.net/basic-rop-techniques-and-tricks/</a></li>
+<li><a href="http://qcd.phys.cmu.edu/QCDcluster/intel/vtune/reference/vc246.htm">http://qcd.phys.cmu.edu/QCDcluster/intel/vtune/reference/vc246.htm</a></li>
+<li><a href="https://github.com/SPRITZ-Research-Group/ctf-writeups/tree/master/0x00ctf-2017/pwn/left-250">https://github.com/SPRITZ-Research-Group/ctf-writeups/tree/master/0x00ctf-2017/pwn/left-250</a></li>
+</ol>
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                            <a rel="prev" href="../return-oriented-programming/calling-libc-functions-and-syscalls.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
+                            <a rel="next" href="../return-oriented-programming/executing-arbitrary-shellcode.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                    <a rel="prev" href="../return-oriented-programming/calling-libc-functions-and-syscalls.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+                    <a rel="next" href="../return-oriented-programming/executing-arbitrary-shellcode.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+            </nav>
+
+        </div>
+
+        <!-- Livereload script (if served using the cli tool) -->
+        <script type="text/javascript">
+            var socket = new WebSocket("ws://localhost:3000/__livereload");
+            socket.onmessage = function (event) {
+                if (event.data === "reload") {
+                    socket.close();
+                    location.reload();
+                }
+            };
+
+            window.onbeforeunload = function() {
+                socket.close();
+            }
+        </script>
+        <script type="text/javascript">
+            window.playground_copyable = true;
+        </script>
+        <script src="../elasticlunr.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../mark.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../searcher.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../clipboard.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../highlight.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../book.js" type="text/javascript" charset="utf-8"></script>
+
+        <!-- Custom JS scripts -->
+    </body>
+</html>

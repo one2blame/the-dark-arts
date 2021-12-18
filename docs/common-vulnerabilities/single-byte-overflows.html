@@ -1,0 +1,300 @@
+<!DOCTYPE HTML>
+<html lang="en" class="sidebar-visible no-js ayu">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>Single Byte Overflows - Introduction to the Dark Arts</title>
+        <!-- Custom HTML head -->
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff" />
+
+        <link rel="icon" href="../favicon.svg">
+        <link rel="shortcut icon" href="../favicon.png">
+        <link rel="stylesheet" href="../css/variables.css">
+        <link rel="stylesheet" href="../css/general.css">
+        <link rel="stylesheet" href="../css/chrome.css">
+        <link rel="stylesheet" href="../css/print.css" media="print">
+        <!-- Fonts -->
+        <link rel="stylesheet" href="../FontAwesome/css/font-awesome.css">
+        <link rel="stylesheet" href="../fonts/fonts.css">
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" href="../highlight.css">
+        <link rel="stylesheet" href="../tomorrow-night.css">
+        <link rel="stylesheet" href="../ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+    </head>
+    <body>
+        <!-- Provide site root to javascript -->
+        <script type="text/javascript">
+            var path_to_root = "../";
+            var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "navy" : "ayu";
+        </script>
+
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script type="text/javascript">
+            try {
+                var theme = localStorage.getItem('mdbook-theme');
+                var sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script type="text/javascript">
+            var theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            var html = document.querySelector('html');
+            html.classList.remove('no-js')
+            html.classList.remove('ayu')
+            html.classList.add(theme);
+            html.classList.add('js');
+        </script>
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script type="text/javascript">
+            var html = document.querySelector('html');
+            var sidebar = 'hidden';
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            }
+            html.classList.remove('sidebar-visible');
+            html.classList.add("sidebar-" + sidebar);
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <div class="sidebar-scrollbox">
+                <ol class="chapter"><li class="chapter-item expanded affix "><a href="../introduction.html">Introduction</a></li><li class="chapter-item expanded "><a href="../reverse-engineering/reverse-engineering.html"><strong aria-hidden="true">1.</strong> Reverse engineering</a><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../reverse-engineering/static-reverse-engineering.html"><strong aria-hidden="true">1.1.</strong> Static reverse Engineering</a></li><li class="chapter-item expanded "><a href="../reverse-engineering/dynamic-reverse-engineering.html"><strong aria-hidden="true">1.2.</strong> Dynamic reverse engineering</a></li><li class="chapter-item expanded "><a href="../reverse-engineering/dumb-fuzzing.html"><strong aria-hidden="true">1.3.</strong> Dumb fuzzing</a></li><li class="chapter-item expanded "><a href="../reverse-engineering/instrumentation.html"><strong aria-hidden="true">1.4.</strong> Instrumentation</a></li><li class="chapter-item expanded "><a href="../reverse-engineering/code-coverage-fuzzing.html"><strong aria-hidden="true">1.5.</strong> Coverage-based fuzzing</a></li><li class="chapter-item expanded "><a href="../reverse-engineering/symbolic-execution.html"><strong aria-hidden="true">1.6.</strong> Symbolic execution</a></li><li class="chapter-item expanded "><a href="../reverse-engineering/binary-diffing.html"><strong aria-hidden="true">1.7.</strong> Binary diffing</a></li><li class="chapter-item expanded "><a href="../reverse-engineering/binary-diffing-tools.html"><strong aria-hidden="true">1.8.</strong> Binary diffing tools</a></li></ol></li><li class="chapter-item expanded "><a href="../common-vulnerabilities/common-vulnerabilities.html"><strong aria-hidden="true">2.</strong> Common vulnerabilities</a><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../common-vulnerabilities/stack-buffer-overflow.html"><strong aria-hidden="true">2.1.</strong> Stack buffer overflow</a></li><li class="chapter-item expanded "><a href="../common-vulnerabilities/heap-buffer-overflow.html"><strong aria-hidden="true">2.2.</strong> Heap buffer overflow</a><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><a href="../common-vulnerabilities/house-of-force.html"><strong aria-hidden="true">2.2.1.</strong> House of Force</a></li><li class="chapter-item "><a href="../common-vulnerabilities/house-of-orange.html"><strong aria-hidden="true">2.2.2.</strong> House of Orange</a></li><li class="chapter-item expanded "><a href="../common-vulnerabilities/single-byte-overflows.html" class="active"><strong aria-hidden="true">2.2.3.</strong> Single Byte Overflows</a></li></ol></li><li class="chapter-item expanded "><a href="../common-vulnerabilities/use-after-free.html"><strong aria-hidden="true">2.3.</strong> Use after free</a><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><a href="../common-vulnerabilities/fastbin-dup.html"><strong aria-hidden="true">2.3.1.</strong> Fastbin Dup</a></li><li class="chapter-item "><a href="../common-vulnerabilities/unsortedbin-attack.html"><strong aria-hidden="true">2.3.2.</strong> Unsortedbin Attack</a></li></ol></li><li class="chapter-item expanded "><a href="../common-vulnerabilities/heap-grooming.html"><strong aria-hidden="true">2.4.</strong> Heap grooming</a></li><li class="chapter-item expanded "><a href="../common-vulnerabilities/race-conditions.html"><strong aria-hidden="true">2.5.</strong> Race conditions</a></li></ol></li><li class="chapter-item expanded "><a href="../exploit-primitives/exploit-primitives.html"><strong aria-hidden="true">3.</strong> Exploit primitives</a><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../exploit-primitives/arbitrary-write-primitives.html"><strong aria-hidden="true">3.1.</strong> Arbitrary write primitives</a></li><li class="chapter-item expanded "><a href="../exploit-primitives/relative-write-primitives.html"><strong aria-hidden="true">3.2.</strong> Relative write primitives</a></li><li class="chapter-item expanded "><a href="../exploit-primitives/arbitrary-read-primitives.html"><strong aria-hidden="true">3.3.</strong> Arbitrary read primitives</a></li><li class="chapter-item expanded "><a href="../exploit-primitives/chaining-primitives.html"><strong aria-hidden="true">3.4.</strong> Chaining primitives</a></li><li class="chapter-item expanded "><a href="../exploit-primitives/escalating-privileges.html"><strong aria-hidden="true">3.5.</strong> Escalating privileges</a></li></ol></li><li class="chapter-item expanded "><a href="../return-oriented-programming/return-oriented-programming.html"><strong aria-hidden="true">4.</strong> Return oriented programming</a><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../return-oriented-programming/aslr-nx.html"><strong aria-hidden="true">4.1.</strong> ASLR/NX</a></li><li class="chapter-item expanded "><a href="../return-oriented-programming/finding-gadgets.html"><strong aria-hidden="true">4.2.</strong> Finding gadgets</a></li><li class="chapter-item expanded "><a href="../return-oriented-programming/calling-libc-functions-and-syscalls.html"><strong aria-hidden="true">4.3.</strong> Calling libc functions and syscalls</a></li><li class="chapter-item expanded "><a href="../return-oriented-programming/chaining-gadgets-to-execute-code.html"><strong aria-hidden="true">4.4.</strong> Chaining gadgets to execute code</a></li><li class="chapter-item expanded "><a href="../return-oriented-programming/executing-arbitrary-shellcode.html"><strong aria-hidden="true">4.5.</strong> Executing arbitrary shellcode</a></li></ol></li><li class="chapter-item expanded "><a href="../exploit-mitigations/exploit-mitigations.html"><strong aria-hidden="true">5.</strong> Exploit mitigations</a><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../exploit-mitigations/aslr.html"><strong aria-hidden="true">5.1.</strong> Address Space Layout Randomization (ASLR)</a></li><li class="chapter-item expanded "><a href="../exploit-mitigations/dep.html"><strong aria-hidden="true">5.2.</strong> Data Execution Prevention (DEP)/NX</a></li><li class="chapter-item expanded "><a href="../exploit-mitigations/position-independent-executables.html"><strong aria-hidden="true">5.3.</strong> Position Independent Executables (PIEs)</a></li><li class="chapter-item expanded "><a href="../exploit-mitigations/exploiting-pies.html"><strong aria-hidden="true">5.4.</strong> Exploiting PIEs</a></li><li class="chapter-item expanded "><a href="../exploit-mitigations/stack-canaries.html"><strong aria-hidden="true">5.5.</strong> Stack canaries</a></li><li class="chapter-item expanded "><a href="../exploit-mitigations/safe-list-unlinking.html"><strong aria-hidden="true">5.6.</strong> Safe list unlinking</a></li></ol></li></ol>
+            </div>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
+        </nav>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky bordered">
+                    <div class="left-buttons">
+                        <button id="sidebar-toggle" class="icon-button" type="button" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </button>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu (default)</button></li>
+                        </ul>
+                        <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
+                            <i class="fa fa-search"></i>
+                        </button>
+                    </div>
+
+                    <h1 class="menu-title">Introduction to the Dark Arts</h1>
+
+                    <div class="right-buttons">
+                        <a href="../print.html" title="Print this book" aria-label="Print this book">
+                            <i id="print-button" class="fa fa-print"></i>
+                        </a>
+                    </div>
+                </div>
+
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <input type="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script type="text/javascript">
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <main>
+                        <h1 id="single-byte-overflows"><a class="header" href="#single-byte-overflows">Single Byte Overflows</a></h1>
+<p>Single byte overflows are pretty dangerous bugs to have in a program, given the
+right conditions. A stack-based, single byte, <code>NULL</code> buffer overflow was
+demonstrated in this <a href="https://seclists.org/bugtraq/1998/Oct/109">this post</a> in
+1998, used to overwrite the LSB of the <code>ebp</code> causing the stack frame to be
+relocated to a lower address in memory - a location in the stack that the user
+controls and can forge a fake stack frame.</p>
+<p>In 2014, Google Project Zero releases <em>The poisoned NUL byte, 2014 edition</em>,
+demonstrating that a heap-based, single byte, <code>NULL</code> buffer overflow can also
+be used to gain code execution. <a href="#references">[2]</a></p>
+<h2 id="techniques"><a class="header" href="#techniques">Techniques</a></h2>
+<p>The following subsections cover a white paper from Accenture Security that goes
+in-depth on different methods of exploiting a one byte heap-based buffer
+overflow to gain overlapping chunks and possibly code execution.
+<a href="#references">[3]</a></p>
+<h3 id="extending-free-chunks"><a class="header" href="#extending-free-chunks">Extending free chunks</a></h3>
+<p>A diagram for this technique can be found in section 3.2.1 of
+<a href="#references">[3]</a>. With a one byte heap-based buffer overflow, the attacker
+will write actual information to the <code>size</code> field of a free chunk, increasing
+its size. An allocation larger than the corrupted chunk's original size will
+cause the chunk to overlap into succeeding chunks.</p>
+<p>This scenario relies on the fact that <code>malloc()</code> does not check the <code>prev_size</code>
+field of the succeeding chunk when allocating a previously <code>free()</code>d chunk.</p>
+<h3 id="extending-allocated-chunks"><a class="header" href="#extending-allocated-chunks">Extending allocated chunks</a></h3>
+<p>This technique is similar to the one above, it's just that the series of
+operations is reordered. A diagram for this technique can be found in section
+3.2.2 of <a href="#references">[3]</a>. Essentially, the corruption happens before the
+victim, corrupted chunk is <code>free()</code>d. An attacker writes one byte, increasing
+the size of the corrupted chunk. After the corrupted chunk is <code>free()</code>d,
+another allocation is requested with a size greater than the original size
+of the corrupted chunk, causing the corrupted chunk's user data to overlap
+the succeeding chunk.</p>
+<p>This technique exploits the fact that <code>free()</code> has no ability to determine if
+the corrupted chunk's <code>size</code> field is supposed to be larger or smaller, as the
+only location that contains the chunk's size metadata is the <code>size</code> field
+corrupted by the one byte heap-based buffer overflow.</p>
+<h3 id="shrinking-free-chunks"><a class="header" href="#shrinking-free-chunks">Shrinking free chunks</a></h3>
+<p>Here's our heap-based, single byte, <code>NULL</code> buffer overflow - a memory
+corruption vulnerability that can lead to some interesting outcomes. A good
+demonstration of this technique exists on the <code>how2heap</code> repo,
+<a href="#references">here</a>. The diagram for this technique can be found in section
+3.2.3 of <a href="#references">[3]</a>.</p>
+<p>The initial state of the program involves having three chunks allocated on the
+heap, all too large for the fastbin. The chunk in the middle of these three
+will have a size such that a <code>NULL</code> byte buffer overflow from the preceding
+chunk will overwrite the <code>size</code> field of the middle chunk, causing it to shrink
+in size. The example provided sets the middle chunk's size to <code>0x210</code> and,
+after the <code>NULL</code> byte overflow, its size is set to <code>0x200</code>.</p>
+<p>Before the memory corruption occurs, the middle chunk is <code>free()</code>d. This is
+required because the <code>prev_size</code> field of the succeeding chunk must be set to
+<code>0x210</code>. The attacker conducts the <code>NULL</code> byte buffer overflow and sets the
+free chunk's size to <code>0x200</code>. <strong>In later updates to <code>glibc</code>, the <code>prev_size</code>
+field and the <code>size</code> field of the chunk about to be backwards consolidated is
+now checked for consistency. Attackers must now write a valid <code>prev_size</code> field
+to the succeeding chunk before attempting this backwards consolidation.</strong></p>
+<p>Two chunk are now allocated from this newly <code>free()</code>d space, one chunk that's
+not within fastbin range, and subsequent chunks that are. We want chunks that
+are in fastbin range to avoid having these chunks subjected to <code>malloc()</code>'s
+consolidation and sorting behavior. We free the first chunk of the two chunks
+we just allocted, placing it in the unsortedbin.</p>
+<p>Almost there, the attacker frees the third chunk of the original three, causing
+<code>free()</code> to inspect the <code>prev_size</code> field of the third chunk and consolidating
+it with the chunk that we just <code>free()</code>d into the unsortedbin. This free space
+now overlaps the fastbin sized chunk we allocated earlier.</p>
+<p>Finally, we allocate a chunk large enough to overlap the fastbin sized chunk
+that still remains. Because of this heap-based, one byte, <code>NULL</code> buffer
+overflow, we have allocated two chunks that overlap one another which can
+easily lead to the implementation of other exploitation primitives.</p>
+<h3 id="exploitation"><a class="header" href="#exploitation">Exploitation</a></h3>
+<p>In <a href="#references">[3]</a>, further dicussion is provided on how to use overlapping
+chunks to leak sensitive information and gain code exeuction. In section 4.3.2,
+the authors demonstrate that they can create overlapping unsortedbin size
+chunks.</p>
+<p>They <code>free()</code> the unsortedbin eligible chunk, and the pointer to the head of
+the unsortedbin, which resides in the <code>main_arena</code>, is written to the <code>fd</code> and
+<code>bk</code> pointers of the chunk. Because they still maintain a chunk overlapping
+this now free chunk, they can leak the memory of the free chunk to obtain its
+<code>fd</code> and <code>bk</code> pointers, providing them a <code>glibc</code> leak.</p>
+<p>Not covered in this white paper, but possible nonetheless, is that the
+allocation and <code>free()</code>ing of two fastbin eligible chunks can lead to a heap
+location leak. If these two fastbin eligible chunks are <code>free()</code>d while being
+overlapped by a much larger, allocated chunk, the attacker could feasibly read
+the <code>fd</code> pointers of these fastbin free chunks to derive the base of the heap.</p>
+<p>Finally, to gain code execution, the authors of this white paper use a Global
+Offset Table (GOT) overwrite. For the application they are exploiting, the
+program maintains sensitive structures within the heap and, within these
+structures, there are pointers that will be used to write incoming data from
+a socket connection. The authors generate two of these structures in the heap,
+one to leak <code>glibc</code> and one to conduct arbitrary writes. The authors use the
+<code>glibc</code> leak to derive the location of the GOT - for this application's
+environment, the GOT is always a fixed offset away from the <code>glibc</code> base. Once
+they've derived the location of <code>free@GOT</code>, they corrupt a heap structure's
+write pointer to point to <code>free@GOT</code>. After this, they send a message which
+causes the program to overwrite <code>free@GOT</code> with the pointer to <code>system@libc</code>.
+Coercing the program to call <code>free@plt</code> leads to <code>system@libc</code> with a command
+they provide.</p>
+<h2 id="patch"><a class="header" href="#patch">Patch</a></h2>
+<p>A patch that thwarts the shrinking of chunks to gain overlapping chunks was
+implemented on AUG 2018. This is referenced by the note earlier, as this patch
+conducts a consistency check between the <code>next-&gt;prev_size</code> and <code>victim-&gt;size</code>
+of a <code>victim</code> within the unsortedbin before sorting or consolidating the
+<code>victim</code>. <a href="https://sourceware.org/git/?p=glibc.git;a=commitdiff;h=b90ddd08f6dd688e651df9ee89ca3a69ff88cd0c">[5]</a></p>
+<h2 id="references"><a class="header" href="#references">References</a></h2>
+<ol>
+<li><a href="https://seclists.org/bugtraq/1998/Oct/109">https://seclists.org/bugtraq/1998/Oct/109</a></li>
+<li><a href="https://googleprojectzero.blogspot.com/2014/08/the-poisoned-nul-byte-2014-edition.html">https://googleprojectzero.blogspot.com/2014/08/the-poisoned-nul-byte-2014-edition.html</a></li>
+<li><a href="https://www.contextis.com/en/resources/white-papers/glibc-adventures-the-forgotten-chunks">https://www.contextis.com/en/resources/white-papers/glibc-adventures-the-forgotten-chunks</a></li>
+<li><a href="https://github.com/shellphish/how2heap/blob/master/glibc_2.23/poison_null_byte.c">https://github.com/shellphish/how2heap/blob/master/glibc_2.23/poison_null_byte.c</a></li>
+<li><a href="https://sourceware.org/git/?p=glibc.git;a=commitdiff;h=b90ddd08f6dd688e651df9ee89ca3a69ff88cd0c">https://sourceware.org/git/?p=glibc.git;a=commitdiff;h=b90ddd08f6dd688e651df9ee89ca3a69ff88cd0c</a></li>
+</ol>
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                            <a rel="prev" href="../common-vulnerabilities/house-of-orange.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
+                            <a rel="next" href="../common-vulnerabilities/use-after-free.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                    <a rel="prev" href="../common-vulnerabilities/house-of-orange.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+                    <a rel="next" href="../common-vulnerabilities/use-after-free.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+            </nav>
+
+        </div>
+
+        <!-- Livereload script (if served using the cli tool) -->
+        <script type="text/javascript">
+            var socket = new WebSocket("ws://localhost:3000/__livereload");
+            socket.onmessage = function (event) {
+                if (event.data === "reload") {
+                    socket.close();
+                    location.reload();
+                }
+            };
+
+            window.onbeforeunload = function() {
+                socket.close();
+            }
+        </script>
+        <script type="text/javascript">
+            window.playground_copyable = true;
+        </script>
+        <script src="../elasticlunr.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../mark.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../searcher.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../clipboard.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../highlight.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../book.js" type="text/javascript" charset="utf-8"></script>
+
+        <!-- Custom JS scripts -->
+    </body>
+</html>

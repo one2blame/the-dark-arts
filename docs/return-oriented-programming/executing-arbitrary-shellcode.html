@@ -1,0 +1,323 @@
+<!DOCTYPE HTML>
+<html lang="en" class="sidebar-visible no-js ayu">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>Executing arbitrary shellcode - Introduction to the Dark Arts</title>
+        <!-- Custom HTML head -->
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff" />
+
+        <link rel="icon" href="../favicon.svg">
+        <link rel="shortcut icon" href="../favicon.png">
+        <link rel="stylesheet" href="../css/variables.css">
+        <link rel="stylesheet" href="../css/general.css">
+        <link rel="stylesheet" href="../css/chrome.css">
+        <link rel="stylesheet" href="../css/print.css" media="print">
+        <!-- Fonts -->
+        <link rel="stylesheet" href="../FontAwesome/css/font-awesome.css">
+        <link rel="stylesheet" href="../fonts/fonts.css">
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" href="../highlight.css">
+        <link rel="stylesheet" href="../tomorrow-night.css">
+        <link rel="stylesheet" href="../ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+    </head>
+    <body>
+        <!-- Provide site root to javascript -->
+        <script type="text/javascript">
+            var path_to_root = "../";
+            var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "navy" : "ayu";
+        </script>
+
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script type="text/javascript">
+            try {
+                var theme = localStorage.getItem('mdbook-theme');
+                var sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script type="text/javascript">
+            var theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            var html = document.querySelector('html');
+            html.classList.remove('no-js')
+            html.classList.remove('ayu')
+            html.classList.add(theme);
+            html.classList.add('js');
+        </script>
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script type="text/javascript">
+            var html = document.querySelector('html');
+            var sidebar = 'hidden';
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            }
+            html.classList.remove('sidebar-visible');
+            html.classList.add("sidebar-" + sidebar);
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <div class="sidebar-scrollbox">
+                <ol class="chapter"><li class="chapter-item expanded affix "><a href="../introduction.html">Introduction</a></li><li class="chapter-item expanded "><a href="../reverse-engineering/reverse-engineering.html"><strong aria-hidden="true">1.</strong> Reverse engineering</a><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../reverse-engineering/static-reverse-engineering.html"><strong aria-hidden="true">1.1.</strong> Static reverse Engineering</a></li><li class="chapter-item expanded "><a href="../reverse-engineering/dynamic-reverse-engineering.html"><strong aria-hidden="true">1.2.</strong> Dynamic reverse engineering</a></li><li class="chapter-item expanded "><a href="../reverse-engineering/dumb-fuzzing.html"><strong aria-hidden="true">1.3.</strong> Dumb fuzzing</a></li><li class="chapter-item expanded "><a href="../reverse-engineering/instrumentation.html"><strong aria-hidden="true">1.4.</strong> Instrumentation</a></li><li class="chapter-item expanded "><a href="../reverse-engineering/code-coverage-fuzzing.html"><strong aria-hidden="true">1.5.</strong> Coverage-based fuzzing</a></li><li class="chapter-item expanded "><a href="../reverse-engineering/symbolic-execution.html"><strong aria-hidden="true">1.6.</strong> Symbolic execution</a></li><li class="chapter-item expanded "><a href="../reverse-engineering/binary-diffing.html"><strong aria-hidden="true">1.7.</strong> Binary diffing</a></li><li class="chapter-item expanded "><a href="../reverse-engineering/binary-diffing-tools.html"><strong aria-hidden="true">1.8.</strong> Binary diffing tools</a></li></ol></li><li class="chapter-item expanded "><a href="../common-vulnerabilities/common-vulnerabilities.html"><strong aria-hidden="true">2.</strong> Common vulnerabilities</a><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../common-vulnerabilities/stack-buffer-overflow.html"><strong aria-hidden="true">2.1.</strong> Stack buffer overflow</a></li><li class="chapter-item expanded "><a href="../common-vulnerabilities/heap-buffer-overflow.html"><strong aria-hidden="true">2.2.</strong> Heap buffer overflow</a><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><a href="../common-vulnerabilities/house-of-force.html"><strong aria-hidden="true">2.2.1.</strong> House of Force</a></li><li class="chapter-item "><a href="../common-vulnerabilities/house-of-orange.html"><strong aria-hidden="true">2.2.2.</strong> House of Orange</a></li><li class="chapter-item "><a href="../common-vulnerabilities/single-byte-overflows.html"><strong aria-hidden="true">2.2.3.</strong> Single Byte Overflows</a></li></ol></li><li class="chapter-item expanded "><a href="../common-vulnerabilities/use-after-free.html"><strong aria-hidden="true">2.3.</strong> Use after free</a><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><a href="../common-vulnerabilities/fastbin-dup.html"><strong aria-hidden="true">2.3.1.</strong> Fastbin Dup</a></li><li class="chapter-item "><a href="../common-vulnerabilities/unsortedbin-attack.html"><strong aria-hidden="true">2.3.2.</strong> Unsortedbin Attack</a></li></ol></li><li class="chapter-item expanded "><a href="../common-vulnerabilities/heap-grooming.html"><strong aria-hidden="true">2.4.</strong> Heap grooming</a></li><li class="chapter-item expanded "><a href="../common-vulnerabilities/race-conditions.html"><strong aria-hidden="true">2.5.</strong> Race conditions</a></li></ol></li><li class="chapter-item expanded "><a href="../exploit-primitives/exploit-primitives.html"><strong aria-hidden="true">3.</strong> Exploit primitives</a><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../exploit-primitives/arbitrary-write-primitives.html"><strong aria-hidden="true">3.1.</strong> Arbitrary write primitives</a></li><li class="chapter-item expanded "><a href="../exploit-primitives/relative-write-primitives.html"><strong aria-hidden="true">3.2.</strong> Relative write primitives</a></li><li class="chapter-item expanded "><a href="../exploit-primitives/arbitrary-read-primitives.html"><strong aria-hidden="true">3.3.</strong> Arbitrary read primitives</a></li><li class="chapter-item expanded "><a href="../exploit-primitives/chaining-primitives.html"><strong aria-hidden="true">3.4.</strong> Chaining primitives</a></li><li class="chapter-item expanded "><a href="../exploit-primitives/escalating-privileges.html"><strong aria-hidden="true">3.5.</strong> Escalating privileges</a></li></ol></li><li class="chapter-item expanded "><a href="../return-oriented-programming/return-oriented-programming.html"><strong aria-hidden="true">4.</strong> Return oriented programming</a><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../return-oriented-programming/aslr-nx.html"><strong aria-hidden="true">4.1.</strong> ASLR/NX</a></li><li class="chapter-item expanded "><a href="../return-oriented-programming/finding-gadgets.html"><strong aria-hidden="true">4.2.</strong> Finding gadgets</a></li><li class="chapter-item expanded "><a href="../return-oriented-programming/calling-libc-functions-and-syscalls.html"><strong aria-hidden="true">4.3.</strong> Calling libc functions and syscalls</a></li><li class="chapter-item expanded "><a href="../return-oriented-programming/chaining-gadgets-to-execute-code.html"><strong aria-hidden="true">4.4.</strong> Chaining gadgets to execute code</a></li><li class="chapter-item expanded "><a href="../return-oriented-programming/executing-arbitrary-shellcode.html" class="active"><strong aria-hidden="true">4.5.</strong> Executing arbitrary shellcode</a></li></ol></li><li class="chapter-item expanded "><a href="../exploit-mitigations/exploit-mitigations.html"><strong aria-hidden="true">5.</strong> Exploit mitigations</a><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../exploit-mitigations/aslr.html"><strong aria-hidden="true">5.1.</strong> Address Space Layout Randomization (ASLR)</a></li><li class="chapter-item expanded "><a href="../exploit-mitigations/dep.html"><strong aria-hidden="true">5.2.</strong> Data Execution Prevention (DEP)/NX</a></li><li class="chapter-item expanded "><a href="../exploit-mitigations/position-independent-executables.html"><strong aria-hidden="true">5.3.</strong> Position Independent Executables (PIEs)</a></li><li class="chapter-item expanded "><a href="../exploit-mitigations/exploiting-pies.html"><strong aria-hidden="true">5.4.</strong> Exploiting PIEs</a></li><li class="chapter-item expanded "><a href="../exploit-mitigations/stack-canaries.html"><strong aria-hidden="true">5.5.</strong> Stack canaries</a></li><li class="chapter-item expanded "><a href="../exploit-mitigations/safe-list-unlinking.html"><strong aria-hidden="true">5.6.</strong> Safe list unlinking</a></li></ol></li></ol>
+            </div>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
+        </nav>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky bordered">
+                    <div class="left-buttons">
+                        <button id="sidebar-toggle" class="icon-button" type="button" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </button>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu (default)</button></li>
+                        </ul>
+                        <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
+                            <i class="fa fa-search"></i>
+                        </button>
+                    </div>
+
+                    <h1 class="menu-title">Introduction to the Dark Arts</h1>
+
+                    <div class="right-buttons">
+                        <a href="../print.html" title="Print this book" aria-label="Print this book">
+                            <i id="print-button" class="fa fa-print"></i>
+                        </a>
+                    </div>
+                </div>
+
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <input type="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script type="text/javascript">
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <main>
+                        <h1 id="executing-arbitrary-shellcode"><a class="header" href="#executing-arbitrary-shellcode">Executing arbitrary shellcode</a></h1>
+<p>At this point, we've covered how to use <code>ROP</code> to call a <code>libc</code> function, how to
+chain together multiple <code>ROP</code> gadgets to call <code>libc</code> functions in succession,
+and how to create <code>ROP</code> chains that execute <code>syscall</code>s directly. What if we
+wanted to execute code that wasn't already present in memory?</p>
+<p>Remember, the NX/DEP/W^X protection mechanisms were created to combat code
+injection techniques that usually executed code directly from the <code>stack</code>.
+If we debug any normal program today with <code>gdb</code> enhancements like <code>GEF</code>,
+<code>PEDA</code>, or <code>pwndbg</code>, we can inspect the process's virtual memory mapping with
+<code>vmmap</code> and see the permissions for each page of memory. Notice that no pages
+simultaneously have write and execute permissions. The W^X protection
+mechanism tries to delineate between what can be considered &quot;code&quot; and what
+can be considered &quot;data&quot;, but we see how well that works out when <code>ROP</code> is
+introduced.</p>
+<p><strong>How do we modify these permissions so that we can execute shellcode?</strong></p>
+<p>We do what the operating system does when it sets permissions for the pages of
+our process. If we inspect any program with <code>strace</code> we'll find that the
+operating system makes multiple calls to the functions <code>mmap()</code> and
+<code>mprotect()</code>. These two functions are used to map files or devices into memory
+and to set protections on regions of memory within a process. Now that we fully
+understand how to chain successive <code>libc</code> function calls, we can create a <code>ROP</code>
+chain that uses <code>mprotect()</code> to modify the permissions of a known location
+within memory. <a href="#references">[1]</a> In order to execute our shellcode, we would
+need to follow these steps:</p>
+<ol>
+<li>Place our shellcode into some known, writeable location within memory.</li>
+<li>Make a call to <code>mprotect()</code> to change the permissions of the page where our
+shellcode resides to <code>r-xp</code>.
+<ul>
+<li><code>r</code> stands for <code>read</code></li>
+<li><code>x</code> stands for <code>execute</code></li>
+<li><code>p</code> stands for <code>private</code></li>
+</ul>
+</li>
+<li>Return to the location in memory containing our shellcode and begin
+execution.</li>
+</ol>
+<p>Here's an example of how we would do this in <code>x86-64</code> using <code>ROP</code>. Assume that
+the attacker has used an information leak to expose sensitive information
+allowing them to discover the base of <code>libc</code> in memory:</p>
+<pre><code class="language-python">shellcode = asm(shellcode)          # assemble our shellcode
+
+payload = [
+    pop_rdi_pop_rsi_pop_rdx_ret,    # rdi=stdin; rsi=initial, rdx=num_bytes
+    0,                              # fd 0 (stdin)
+    initial,                        # libc initial data structure
+    len(shellcode),                 # length of assembled shellcode
+    read_sym,                       # read shellcode into initial from stdin
+    pop_rdi_pop_rsi_pop_rdx_ret,    # rdi=initial, rsi=page_size, rdx=perms
+    initial,                        # initial now contains our shellcode
+    4096,                           # assume page size is 0x1000
+    5,                              # PROT_READ|PROT_EXEC
+    mprotect_sym,                   # change permissions of initial
+    initial                         # ret into our shellcode
+]
+
+io.sendline(flat(payload))          # flat() ensures 8 byte alignment
+io.send(shellcode)                  # write shellcode into initial with stdin
+</code></pre>
+<p><strong>What's happening here?</strong></p>
+<p>First, we assemble our shellcode - let's assume it's a simple
+<code>sys_execve('/bin/sh', NULL, NULL)</code> command. Then we construct a <code>ROP</code> chain
+that will execute <code>read(STDIN, initial, len(shellcode))</code>,
+<code>mprotect(initial, 4096, PROT_READ|PROT_EXEC)</code> <a href="#references">[2]</a>, and then
+<code>ret</code> into our shellcode in <code>initial</code>. Finally, we send the <code>ROP</code> chain to the
+target and then send the shellcode which will be <code>read()</code> into <code>initial</code> via
+<code>stdin</code>.</p>
+<p>Once the <code>read()</code> operation completes, <code>mprotect()</code> will change <code>initial</code> from
+<code>rw-p</code> to <code>r-xp</code>, making our shellcode executable. We'll <code>ret</code> into <code>initial</code>
+and begin executing our shellcode.</p>
+<p><strong>How would we do this with mmap?</strong></p>
+<ol>
+<li>Create a file containing our shellcode.</li>
+<li><code>open()</code> the file to acquire a file descriptor.</li>
+<li>Make a call to <code>mmap()</code> using the new file descriptor, mapping the contents
+of the shellcode into memory with the permissions <code>PROT_READ|PROT_EXEC</code> and the
+flags <code>MAP_PRIVATE|MAP_ANON</code>. <a href="#references">[3]</a></li>
+<li>Return to the location of the newly mapped memory containing our shellcode
+and begin execution.</li>
+</ol>
+<p><strong>How would we do this with mmap without creating a file?</strong></p>
+<ol>
+<li>Make a call to <code>mmap()</code> with the permissions
+<code>PROT_READ|PROT_WRITE|PROT_EXEC</code> and the flags <code>MAP_PRIVATE|MAP_ANON</code> to create
+<code>rwxp</code> page(s) in memory. Use other write primitives or gadgets to write
+shellcode into the newly mapped <code>rwxp</code> memory (via an open socket or <code>stdin</code>).</li>
+<li>Return into the <code>rwxp</code> memory containing our shellcode and begin execution.</li>
+</ol>
+<p><strong>What if I don't have gadgets to retrieve the address returned from mmap?</strong></p>
+<p>We use <code>mmap()</code>'s <code>MAP_FIXED</code> flag in tandem with <code>MAP_PRIVATE|MAP_ANON</code> to
+control the page-aligned address used by <code>mmap()</code>. Then we can hardcode this
+known address for use elsewhere in our chain for our eventual jump to our
+shellcode.</p>
+<h2 id="what-constraints-must-we-consider-when-attempting-to-change-the-permissions-of-existing-memory-segments-with-mprotect"><a class="header" href="#what-constraints-must-we-consider-when-attempting-to-change-the-permissions-of-existing-memory-segments-with-mprotect">What constraints must we consider when attempting to change the permissions of existing memory segments with mprotect?</a></h2>
+<p>When using <code>mprotect()</code>, the location we provide for the <code>void *addr</code> argument
+must be aligned to a page boundary. The same goes for <code>mmap()</code>, if the
+<code>void *addr</code> argument provided is not page aligned, an error will occur. The
+<code>void *addr</code> argument for <code>mmap()</code> can be <code>null</code> and this is usually the
+best case - the kernel will pick a location within memory for us and the
+<code>mmap()</code> call will return the address in <code>rax</code>.</p>
+<h2 id="what-are-some-examplesscenarios-in-which-a-program-might-organically-contain-rwx-buffers"><a class="header" href="#what-are-some-examplesscenarios-in-which-a-program-might-organically-contain-rwx-buffers">What are some examples/scenarios in which a program might organically contain RWX buffers?</a></h2>
+<p>A simple example would be a program that has NX/DEP protection mechanisms
+disabled. We won't come across these types of targets too often, but there are
+still some devices in the wild (like IoT devices, routers, etc.) that are
+running programs without these exploit mitigation measures. For example, MIPS
+Linux didn't support a non-executable stack until around 2015, which can be
+considered pretty recent. <a href="#references">[4]</a><a href="#references">[5]</a></p>
+<p>Another example is Just-in-Time (JIT) compilation. JIT compilation can be
+summed up as a program creating new executable code that wasn't part of the
+original program and then running that code. <a href="#references">[6]</a> JIT compilation
+is supported in most browser applications and sometimes the memory pages that
+are created to store and execute the JIT compiled code have <code>rwx</code> permissions,
+allowing attackers to take advantage of these memory pages to execute arbitrary
+code. This type of vulnerability was present in WebKit's JavaScriptCore library
+used by the Safari web browser on Apple iOS. <a href="#references">[7]</a></p>
+<p><a href="https://faraz.faith/2019-12-13-starctf-oob-v8-indepth/">This</a> example from
+the <code>oob-v8</code> challenge in *<strong>CTF 2019</strong> showcases the usage of WebAssembly to
+create a <code>rwx</code> page within Google Chrome's JavaScript engine, <code>v8</code>. The author
+demonstrates leaking the address of the <code>rwx</code> page using a vulnerability
+discovered in <code>d8</code>, <code>v8</code>'s accompanying JavaScript read-eval-print-loop (REPL)
+shell, and then using the same vulnerability to write shellcode into the
+discovered memory page to gain code execution.</p>
+<h3 id="references"><a class="header" href="#references">References</a></h3>
+<ol>
+<li><a href="https://www.ret2rop.com/2018/08/make-stack-executable-again.html">https://www.ret2rop.com/2018/08/make-stack-executable-again.html</a></li>
+<li><a href="https://man7.org/linux/man-pages/man2/mprotect.2.html">https://man7.org/linux/man-pages/man2/mprotect.2.html</a></li>
+<li><a href="https://man7.org/linux/man-pages/man2/mmap.2.html">https://man7.org/linux/man-pages/man2/mmap.2.html</a></li>
+<li><a href="https://lwn.net/Articles/653708/">https://lwn.net/Articles/653708/</a></li>
+<li><a href="https://lore.kernel.org/patchwork/patch/506101/">https://lore.kernel.org/patchwork/patch/506101/</a></li>
+<li><a href="https://eli.thegreenplace.net/2013/11/05/how-to-jit-an-introduction">https://eli.thegreenplace.net/2013/11/05/how-to-jit-an-introduction</a></li>
+<li><a href="https://info.lookout.com/rs/051-ESQ-475/images/pegasus-exploits-technical-details.pdf">https://info.lookout.com/rs/051-ESQ-475/images/pegasus-exploits-technical-details.pdf</a></li>
+<li><a href="https://faraz.faith/2019-12-13-starctf-oob-v8-indepth/">https://faraz.faith/2019-12-13-starctf-oob-v8-indepth/</a></li>
+</ol>
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                            <a rel="prev" href="../return-oriented-programming/chaining-gadgets-to-execute-code.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
+                            <a rel="next" href="../exploit-mitigations/exploit-mitigations.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                    <a rel="prev" href="../return-oriented-programming/chaining-gadgets-to-execute-code.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+                    <a rel="next" href="../exploit-mitigations/exploit-mitigations.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+            </nav>
+
+        </div>
+
+        <!-- Livereload script (if served using the cli tool) -->
+        <script type="text/javascript">
+            var socket = new WebSocket("ws://localhost:3000/__livereload");
+            socket.onmessage = function (event) {
+                if (event.data === "reload") {
+                    socket.close();
+                    location.reload();
+                }
+            };
+
+            window.onbeforeunload = function() {
+                socket.close();
+            }
+        </script>
+        <script type="text/javascript">
+            window.playground_copyable = true;
+        </script>
+        <script src="../elasticlunr.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../mark.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../searcher.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../clipboard.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../highlight.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../book.js" type="text/javascript" charset="utf-8"></script>
+
+        <!-- Custom JS scripts -->
+    </body>
+</html>

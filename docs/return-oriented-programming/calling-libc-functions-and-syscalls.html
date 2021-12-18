@@ -1,0 +1,287 @@
+<!DOCTYPE HTML>
+<html lang="en" class="sidebar-visible no-js ayu">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>Calling libc functions and syscalls - Introduction to the Dark Arts</title>
+        <!-- Custom HTML head -->
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff" />
+
+        <link rel="icon" href="../favicon.svg">
+        <link rel="shortcut icon" href="../favicon.png">
+        <link rel="stylesheet" href="../css/variables.css">
+        <link rel="stylesheet" href="../css/general.css">
+        <link rel="stylesheet" href="../css/chrome.css">
+        <link rel="stylesheet" href="../css/print.css" media="print">
+        <!-- Fonts -->
+        <link rel="stylesheet" href="../FontAwesome/css/font-awesome.css">
+        <link rel="stylesheet" href="../fonts/fonts.css">
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" href="../highlight.css">
+        <link rel="stylesheet" href="../tomorrow-night.css">
+        <link rel="stylesheet" href="../ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+    </head>
+    <body>
+        <!-- Provide site root to javascript -->
+        <script type="text/javascript">
+            var path_to_root = "../";
+            var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "navy" : "ayu";
+        </script>
+
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script type="text/javascript">
+            try {
+                var theme = localStorage.getItem('mdbook-theme');
+                var sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script type="text/javascript">
+            var theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            var html = document.querySelector('html');
+            html.classList.remove('no-js')
+            html.classList.remove('ayu')
+            html.classList.add(theme);
+            html.classList.add('js');
+        </script>
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script type="text/javascript">
+            var html = document.querySelector('html');
+            var sidebar = 'hidden';
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            }
+            html.classList.remove('sidebar-visible');
+            html.classList.add("sidebar-" + sidebar);
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <div class="sidebar-scrollbox">
+                <ol class="chapter"><li class="chapter-item expanded affix "><a href="../introduction.html">Introduction</a></li><li class="chapter-item expanded "><a href="../reverse-engineering/reverse-engineering.html"><strong aria-hidden="true">1.</strong> Reverse engineering</a><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../reverse-engineering/static-reverse-engineering.html"><strong aria-hidden="true">1.1.</strong> Static reverse Engineering</a></li><li class="chapter-item expanded "><a href="../reverse-engineering/dynamic-reverse-engineering.html"><strong aria-hidden="true">1.2.</strong> Dynamic reverse engineering</a></li><li class="chapter-item expanded "><a href="../reverse-engineering/dumb-fuzzing.html"><strong aria-hidden="true">1.3.</strong> Dumb fuzzing</a></li><li class="chapter-item expanded "><a href="../reverse-engineering/instrumentation.html"><strong aria-hidden="true">1.4.</strong> Instrumentation</a></li><li class="chapter-item expanded "><a href="../reverse-engineering/code-coverage-fuzzing.html"><strong aria-hidden="true">1.5.</strong> Coverage-based fuzzing</a></li><li class="chapter-item expanded "><a href="../reverse-engineering/symbolic-execution.html"><strong aria-hidden="true">1.6.</strong> Symbolic execution</a></li><li class="chapter-item expanded "><a href="../reverse-engineering/binary-diffing.html"><strong aria-hidden="true">1.7.</strong> Binary diffing</a></li><li class="chapter-item expanded "><a href="../reverse-engineering/binary-diffing-tools.html"><strong aria-hidden="true">1.8.</strong> Binary diffing tools</a></li></ol></li><li class="chapter-item expanded "><a href="../common-vulnerabilities/common-vulnerabilities.html"><strong aria-hidden="true">2.</strong> Common vulnerabilities</a><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../common-vulnerabilities/stack-buffer-overflow.html"><strong aria-hidden="true">2.1.</strong> Stack buffer overflow</a></li><li class="chapter-item expanded "><a href="../common-vulnerabilities/heap-buffer-overflow.html"><strong aria-hidden="true">2.2.</strong> Heap buffer overflow</a><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><a href="../common-vulnerabilities/house-of-force.html"><strong aria-hidden="true">2.2.1.</strong> House of Force</a></li><li class="chapter-item "><a href="../common-vulnerabilities/house-of-orange.html"><strong aria-hidden="true">2.2.2.</strong> House of Orange</a></li><li class="chapter-item "><a href="../common-vulnerabilities/single-byte-overflows.html"><strong aria-hidden="true">2.2.3.</strong> Single Byte Overflows</a></li></ol></li><li class="chapter-item expanded "><a href="../common-vulnerabilities/use-after-free.html"><strong aria-hidden="true">2.3.</strong> Use after free</a><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><a href="../common-vulnerabilities/fastbin-dup.html"><strong aria-hidden="true">2.3.1.</strong> Fastbin Dup</a></li><li class="chapter-item "><a href="../common-vulnerabilities/unsortedbin-attack.html"><strong aria-hidden="true">2.3.2.</strong> Unsortedbin Attack</a></li></ol></li><li class="chapter-item expanded "><a href="../common-vulnerabilities/heap-grooming.html"><strong aria-hidden="true">2.4.</strong> Heap grooming</a></li><li class="chapter-item expanded "><a href="../common-vulnerabilities/race-conditions.html"><strong aria-hidden="true">2.5.</strong> Race conditions</a></li></ol></li><li class="chapter-item expanded "><a href="../exploit-primitives/exploit-primitives.html"><strong aria-hidden="true">3.</strong> Exploit primitives</a><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../exploit-primitives/arbitrary-write-primitives.html"><strong aria-hidden="true">3.1.</strong> Arbitrary write primitives</a></li><li class="chapter-item expanded "><a href="../exploit-primitives/relative-write-primitives.html"><strong aria-hidden="true">3.2.</strong> Relative write primitives</a></li><li class="chapter-item expanded "><a href="../exploit-primitives/arbitrary-read-primitives.html"><strong aria-hidden="true">3.3.</strong> Arbitrary read primitives</a></li><li class="chapter-item expanded "><a href="../exploit-primitives/chaining-primitives.html"><strong aria-hidden="true">3.4.</strong> Chaining primitives</a></li><li class="chapter-item expanded "><a href="../exploit-primitives/escalating-privileges.html"><strong aria-hidden="true">3.5.</strong> Escalating privileges</a></li></ol></li><li class="chapter-item expanded "><a href="../return-oriented-programming/return-oriented-programming.html"><strong aria-hidden="true">4.</strong> Return oriented programming</a><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../return-oriented-programming/aslr-nx.html"><strong aria-hidden="true">4.1.</strong> ASLR/NX</a></li><li class="chapter-item expanded "><a href="../return-oriented-programming/finding-gadgets.html"><strong aria-hidden="true">4.2.</strong> Finding gadgets</a></li><li class="chapter-item expanded "><a href="../return-oriented-programming/calling-libc-functions-and-syscalls.html" class="active"><strong aria-hidden="true">4.3.</strong> Calling libc functions and syscalls</a></li><li class="chapter-item expanded "><a href="../return-oriented-programming/chaining-gadgets-to-execute-code.html"><strong aria-hidden="true">4.4.</strong> Chaining gadgets to execute code</a></li><li class="chapter-item expanded "><a href="../return-oriented-programming/executing-arbitrary-shellcode.html"><strong aria-hidden="true">4.5.</strong> Executing arbitrary shellcode</a></li></ol></li><li class="chapter-item expanded "><a href="../exploit-mitigations/exploit-mitigations.html"><strong aria-hidden="true">5.</strong> Exploit mitigations</a><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../exploit-mitigations/aslr.html"><strong aria-hidden="true">5.1.</strong> Address Space Layout Randomization (ASLR)</a></li><li class="chapter-item expanded "><a href="../exploit-mitigations/dep.html"><strong aria-hidden="true">5.2.</strong> Data Execution Prevention (DEP)/NX</a></li><li class="chapter-item expanded "><a href="../exploit-mitigations/position-independent-executables.html"><strong aria-hidden="true">5.3.</strong> Position Independent Executables (PIEs)</a></li><li class="chapter-item expanded "><a href="../exploit-mitigations/exploiting-pies.html"><strong aria-hidden="true">5.4.</strong> Exploiting PIEs</a></li><li class="chapter-item expanded "><a href="../exploit-mitigations/stack-canaries.html"><strong aria-hidden="true">5.5.</strong> Stack canaries</a></li><li class="chapter-item expanded "><a href="../exploit-mitigations/safe-list-unlinking.html"><strong aria-hidden="true">5.6.</strong> Safe list unlinking</a></li></ol></li></ol>
+            </div>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
+        </nav>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky bordered">
+                    <div class="left-buttons">
+                        <button id="sidebar-toggle" class="icon-button" type="button" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </button>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu (default)</button></li>
+                        </ul>
+                        <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
+                            <i class="fa fa-search"></i>
+                        </button>
+                    </div>
+
+                    <h1 class="menu-title">Introduction to the Dark Arts</h1>
+
+                    <div class="right-buttons">
+                        <a href="../print.html" title="Print this book" aria-label="Print this book">
+                            <i id="print-button" class="fa fa-print"></i>
+                        </a>
+                    </div>
+                </div>
+
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <input type="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script type="text/javascript">
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <main>
+                        <h1 id="calling-libc-functions--syscalls"><a class="header" href="#calling-libc-functions--syscalls">Calling libc functions / syscalls</a></h1>
+<h2 id="calling-conventions"><a class="header" href="#calling-conventions">Calling conventions</a></h2>
+<p>First, let's talk about <strong>calling conventions</strong>. For the System V <code>x86</code>
+application binary interface (ABI), parameters to functions are passed on the
+stack in reverse order such that the first parameter is the last value pushed
+to the stack.</p>
+<p>Functions are called using the <code>call</code> instruction, pushing the address of the
+next instruction onto the stack and jumping to the operand. Functions return
+to the caller using <code>ret</code>, popping a value from the stack and jumping to it.</p>
+<p>Function calls preserve the registers <code>ebx</code>, <code>esi</code>, <code>edi</code>, <code>ebp</code>, and <code>esp</code>.
+<code>eax</code>, <code>ecx</code>, and <code>edx</code> are scratch registers, their values might not be the
+same after a function call. The return value of a function is stored in <code>eax</code>,
+unless the return value is a 64-bit value, then the higher 32-bits will be
+returned in <code>edx</code>.</p>
+<p>For the System V <code>x86-64</code> ABI, parameters to functions are passed in the
+registers <code>rdi</code>, <code>rsi</code>, <code>rdx</code>, <code>rcx</code>, <code>r8</code>, and <code>r9</code>. If a function call
+requires more than 6 parameters, further values are passed to the function
+call on the stack in reverse order. Functions return to the caller using <code>ret</code>,
+popping a value from the stack and jumping to it.</p>
+<p>Function calls preserve the registers <code>rbx</code>, <code>rsp</code>, <code>rbp</code>, <code>r12</code>, <code>r13</code>, <code>r14</code>,
+and <code>r15</code>. <code>rax</code>, <code>rdi</code>, <code>rsi</code>, <code>rdx</code>, <code>rcx</code>, <code>r8</code>, <code>r9</code>, <code>r10</code>, and <code>r11</code> are
+scratch registers, their values might not be the same after a function call.
+The return value of a function is stored in <code>rax</code>, unless the return value is a
+128-bit value, then the higher 64-bits will be returned in <code>rdx</code>.
+<a href="#references">[1]</a></p>
+<h2 id="the-standard-c-library-and-syscalls"><a class="header" href="#the-standard-c-library-and-syscalls">The standard C library and syscalls</a></h2>
+<p><strong>What's a <code>libc</code> function?</strong></p>
+<p>The term <code>libc</code> is shorthand for the &quot;standard C library&quot;. The most widely used
+C library on Linux is the <a href="http://www.gnu.org/software/libc/">GNU C Library</a>,
+referred to as <code>glibc</code>. The pathname for your installation of <code>libc</code> on a
+Linux operating system is probably something similar to: <code>/lib/libc.so.6</code>. For
+a dynamically-linked target binary, you can use <code>ldd</code> to print its shared
+object dependencies - you'll usually find <code>libc.so.6</code> there.
+<a href="#references">[2]</a></p>
+<p><code>libc</code> functions are functions exported by the <code>libc.so.6</code> shared library.
+<code>libc</code> functions are commonly used functions within the C programming
+language, for example: <code>printf()</code>, <code>puts()</code>, <code>gets()</code></p>
+<p><strong>What's a <code>syscall</code>?</strong></p>
+<p>A system call (<code>syscall</code>), sometimes called kernel calls, is a request for
+service that a program makes of the kernel. This is usually a privileged
+operation, like changing permissions of a file, opening a file descriptor, etc.
+The <code>libc</code> functions mentioned earlier usually handle <code>syscall</code>s for the
+programmer, however, an attacker sometimes has to make <code>syscall</code>s directly for
+an exploit to work. <a href="#references">[3]</a></p>
+<p>To make a <code>syscall</code> directly on <code>x86</code> on a Linux operating system, first
+ensure your registers contain their necessary values.
+<a href="#references">[4]</a> Then, issue the instruction <code>int 0x80</code>. This instruction is
+an interrupt that passes control to interrupt vector <code>0x80</code>. On Linux, this
+interrupt vector is used to handle <code>syscall</code>s. <a href="#references">[5]</a></p>
+<p>To make a <code>syscall</code> directly on <code>x86-64</code> on a Linux operating system, first
+ensure your registers contain their necessary values.
+<a href="#references">[6]</a> Then, issue the instruction <code>syscall</code>. <a href="#references">[7]</a></p>
+<h2 id="using-rop-to-call-a-libc-function"><a class="header" href="#using-rop-to-call-a-libc-function">Using ROP to call a libc function</a></h2>
+<p>Now that we understand the calling conventions, we can use ROP to call <code>libc</code>
+functions. We're going to assume that the attacker already has control over the
+<code>stack</code> and the <code>EIP</code> or <code>RIP</code>. We're also going to assume that the attacker
+has used an information leak to expose sensitive information, namely the base
+of <code>libc</code> within memory. With these conditions, the attacker can execute one of
+the most basic ROP attacks: <code>ret2libc</code>.</p>
+<p>The attacker must use their control over the <code>EIP</code>/<code>RIP</code> and <code>stack</code> to
+construct a stack frame that will call <code>libc</code>'s <code>system()</code> function. The
+attacker will also craft the stack frame so that the <code>system()</code> function will
+use the string <code>'/bin/sh'</code> as an argument.</p>
+<p>Here's what the stack would look like for a <code>ret2libc</code> attack on <code>x86</code>:</p>
+<pre><code class="language-python">p32(system)         # Address of system() function within libc
+p32(0xcafebabe)     # Fake return pointer
+p32(bin_sh_ptr)     # arg0: pointer to '/bin/sh' string
+</code></pre>
+<p>After the <code>stack</code> is corrupted with the attacker's <code>ret2libc</code> <code>stack</code> frame,
+when the vulnerable function conducts a <code>ret</code>, the program will <code>pop</code> the
+<code>system()</code> address from the <code>stack</code> and jump to <code>system()</code> within <code>libc</code>. The
+<code>system()</code> function will continue execution and use the pointer to the
+<code>'/bin/sh'</code> string as an argument, executing <code>system('/bin/sh')</code>.</p>
+<p>For <code>x86-64</code>, remember that we need to place our arguments into registers
+before making calls to <code>libc</code> functions. A <code>ret2libc</code> attack will look slightly
+different:</p>
+<pre><code class="language-python">p64(pop_rdi_ret)    # pop rdi; ret gadget
+p64(bin_sh_ptr)     # arg0: pointer to '/bin/sh' string
+p64(system)         # Address of system() function within libc
+</code></pre>
+<p>For <code>x86-64</code>, <code>system()</code> expects <code>arg0</code> to be contained within the <code>rdi</code>
+register. Using our techniques discussed earlier to find <code>ROP</code> gadgets, we
+find a <code>pop rdi; ret</code> gadget within either <code>libc</code> or the target binary. We use
+this gadget to <code>pop</code> the address of our <code>'/bin/sh'</code> string into <code>rdi</code> and then
+we <code>ret</code> into the address of <code>system()</code>. Just like in <code>x86</code>, this executes
+<code>system('/bin/sh')</code>.</p>
+<p><strong>The next section will cover executing <code>syscall</code>s directly.</strong></p>
+<h2 id="references"><a class="header" href="#references">References</a></h2>
+<ol>
+<li><a href="https://wiki.osdev.org/System_V_ABI">https://wiki.osdev.org/System_V_ABI</a></li>
+<li><a href="https://man7.org/linux/man-pages//man7/libc.7.html">https://man7.org/linux/man-pages//man7/libc.7.html</a></li>
+<li><a href="https://www.gnu.org/software/libc/manual/html_node/System-Calls.html">https://www.gnu.org/software/libc/manual/html_node/System-Calls.html</a></li>
+<li><a href="https://web.archive.org/web/20200218024630/https://syscalls.kernelgrok.com/">https://web.archive.org/web/20200218024630/https://syscalls.kernelgrok.com/</a></li>
+<li><a href="https://en.wikipedia.org/wiki/Interrupt_vector_table">https://en.wikipedia.org/wiki/Interrupt_vector_table</a></li>
+<li><a href="https://blog.rchapman.org/posts/Linux_System_Call_Table_for_x86_64/">https://blog.rchapman.org/posts/Linux_System_Call_Table_for_x86_64/</a></li>
+<li><a href="https://www.cs.fsu.edu/%7Elangley/CNT5605/2017-Summer/assembly-example/assembly.html">https://www.cs.fsu.edu/~langley/CNT5605/2017-Summer/assembly-example/assembly.html</a></li>
+</ol>
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                            <a rel="prev" href="../return-oriented-programming/finding-gadgets.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
+                            <a rel="next" href="../return-oriented-programming/chaining-gadgets-to-execute-code.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                    <a rel="prev" href="../return-oriented-programming/finding-gadgets.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+                    <a rel="next" href="../return-oriented-programming/chaining-gadgets-to-execute-code.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+            </nav>
+
+        </div>
+
+        <!-- Livereload script (if served using the cli tool) -->
+        <script type="text/javascript">
+            var socket = new WebSocket("ws://localhost:3000/__livereload");
+            socket.onmessage = function (event) {
+                if (event.data === "reload") {
+                    socket.close();
+                    location.reload();
+                }
+            };
+
+            window.onbeforeunload = function() {
+                socket.close();
+            }
+        </script>
+        <script type="text/javascript">
+            window.playground_copyable = true;
+        </script>
+        <script src="../elasticlunr.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../mark.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../searcher.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../clipboard.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../highlight.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../book.js" type="text/javascript" charset="utf-8"></script>
+
+        <!-- Custom JS scripts -->
+    </body>
+</html>

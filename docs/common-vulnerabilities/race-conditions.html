@@ -1,0 +1,349 @@
+<!DOCTYPE HTML>
+<html lang="en" class="sidebar-visible no-js ayu">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>Race conditions - Introduction to the Dark Arts</title>
+        <!-- Custom HTML head -->
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff" />
+
+        <link rel="icon" href="../favicon.svg">
+        <link rel="shortcut icon" href="../favicon.png">
+        <link rel="stylesheet" href="../css/variables.css">
+        <link rel="stylesheet" href="../css/general.css">
+        <link rel="stylesheet" href="../css/chrome.css">
+        <link rel="stylesheet" href="../css/print.css" media="print">
+        <!-- Fonts -->
+        <link rel="stylesheet" href="../FontAwesome/css/font-awesome.css">
+        <link rel="stylesheet" href="../fonts/fonts.css">
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" href="../highlight.css">
+        <link rel="stylesheet" href="../tomorrow-night.css">
+        <link rel="stylesheet" href="../ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+    </head>
+    <body>
+        <!-- Provide site root to javascript -->
+        <script type="text/javascript">
+            var path_to_root = "../";
+            var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "navy" : "ayu";
+        </script>
+
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script type="text/javascript">
+            try {
+                var theme = localStorage.getItem('mdbook-theme');
+                var sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script type="text/javascript">
+            var theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            var html = document.querySelector('html');
+            html.classList.remove('no-js')
+            html.classList.remove('ayu')
+            html.classList.add(theme);
+            html.classList.add('js');
+        </script>
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script type="text/javascript">
+            var html = document.querySelector('html');
+            var sidebar = 'hidden';
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            }
+            html.classList.remove('sidebar-visible');
+            html.classList.add("sidebar-" + sidebar);
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <div class="sidebar-scrollbox">
+                <ol class="chapter"><li class="chapter-item expanded affix "><a href="../introduction.html">Introduction</a></li><li class="chapter-item expanded "><a href="../reverse-engineering/reverse-engineering.html"><strong aria-hidden="true">1.</strong> Reverse engineering</a><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../reverse-engineering/static-reverse-engineering.html"><strong aria-hidden="true">1.1.</strong> Static reverse Engineering</a></li><li class="chapter-item expanded "><a href="../reverse-engineering/dynamic-reverse-engineering.html"><strong aria-hidden="true">1.2.</strong> Dynamic reverse engineering</a></li><li class="chapter-item expanded "><a href="../reverse-engineering/dumb-fuzzing.html"><strong aria-hidden="true">1.3.</strong> Dumb fuzzing</a></li><li class="chapter-item expanded "><a href="../reverse-engineering/instrumentation.html"><strong aria-hidden="true">1.4.</strong> Instrumentation</a></li><li class="chapter-item expanded "><a href="../reverse-engineering/code-coverage-fuzzing.html"><strong aria-hidden="true">1.5.</strong> Coverage-based fuzzing</a></li><li class="chapter-item expanded "><a href="../reverse-engineering/symbolic-execution.html"><strong aria-hidden="true">1.6.</strong> Symbolic execution</a></li><li class="chapter-item expanded "><a href="../reverse-engineering/binary-diffing.html"><strong aria-hidden="true">1.7.</strong> Binary diffing</a></li><li class="chapter-item expanded "><a href="../reverse-engineering/binary-diffing-tools.html"><strong aria-hidden="true">1.8.</strong> Binary diffing tools</a></li></ol></li><li class="chapter-item expanded "><a href="../common-vulnerabilities/common-vulnerabilities.html"><strong aria-hidden="true">2.</strong> Common vulnerabilities</a><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../common-vulnerabilities/stack-buffer-overflow.html"><strong aria-hidden="true">2.1.</strong> Stack buffer overflow</a></li><li class="chapter-item expanded "><a href="../common-vulnerabilities/heap-buffer-overflow.html"><strong aria-hidden="true">2.2.</strong> Heap buffer overflow</a><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><a href="../common-vulnerabilities/house-of-force.html"><strong aria-hidden="true">2.2.1.</strong> House of Force</a></li><li class="chapter-item "><a href="../common-vulnerabilities/house-of-orange.html"><strong aria-hidden="true">2.2.2.</strong> House of Orange</a></li><li class="chapter-item "><a href="../common-vulnerabilities/single-byte-overflows.html"><strong aria-hidden="true">2.2.3.</strong> Single Byte Overflows</a></li></ol></li><li class="chapter-item expanded "><a href="../common-vulnerabilities/use-after-free.html"><strong aria-hidden="true">2.3.</strong> Use after free</a><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><a href="../common-vulnerabilities/fastbin-dup.html"><strong aria-hidden="true">2.3.1.</strong> Fastbin Dup</a></li><li class="chapter-item "><a href="../common-vulnerabilities/unsortedbin-attack.html"><strong aria-hidden="true">2.3.2.</strong> Unsortedbin Attack</a></li></ol></li><li class="chapter-item expanded "><a href="../common-vulnerabilities/heap-grooming.html"><strong aria-hidden="true">2.4.</strong> Heap grooming</a></li><li class="chapter-item expanded "><a href="../common-vulnerabilities/race-conditions.html" class="active"><strong aria-hidden="true">2.5.</strong> Race conditions</a></li></ol></li><li class="chapter-item expanded "><a href="../exploit-primitives/exploit-primitives.html"><strong aria-hidden="true">3.</strong> Exploit primitives</a><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../exploit-primitives/arbitrary-write-primitives.html"><strong aria-hidden="true">3.1.</strong> Arbitrary write primitives</a></li><li class="chapter-item expanded "><a href="../exploit-primitives/relative-write-primitives.html"><strong aria-hidden="true">3.2.</strong> Relative write primitives</a></li><li class="chapter-item expanded "><a href="../exploit-primitives/arbitrary-read-primitives.html"><strong aria-hidden="true">3.3.</strong> Arbitrary read primitives</a></li><li class="chapter-item expanded "><a href="../exploit-primitives/chaining-primitives.html"><strong aria-hidden="true">3.4.</strong> Chaining primitives</a></li><li class="chapter-item expanded "><a href="../exploit-primitives/escalating-privileges.html"><strong aria-hidden="true">3.5.</strong> Escalating privileges</a></li></ol></li><li class="chapter-item expanded "><a href="../return-oriented-programming/return-oriented-programming.html"><strong aria-hidden="true">4.</strong> Return oriented programming</a><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../return-oriented-programming/aslr-nx.html"><strong aria-hidden="true">4.1.</strong> ASLR/NX</a></li><li class="chapter-item expanded "><a href="../return-oriented-programming/finding-gadgets.html"><strong aria-hidden="true">4.2.</strong> Finding gadgets</a></li><li class="chapter-item expanded "><a href="../return-oriented-programming/calling-libc-functions-and-syscalls.html"><strong aria-hidden="true">4.3.</strong> Calling libc functions and syscalls</a></li><li class="chapter-item expanded "><a href="../return-oriented-programming/chaining-gadgets-to-execute-code.html"><strong aria-hidden="true">4.4.</strong> Chaining gadgets to execute code</a></li><li class="chapter-item expanded "><a href="../return-oriented-programming/executing-arbitrary-shellcode.html"><strong aria-hidden="true">4.5.</strong> Executing arbitrary shellcode</a></li></ol></li><li class="chapter-item expanded "><a href="../exploit-mitigations/exploit-mitigations.html"><strong aria-hidden="true">5.</strong> Exploit mitigations</a><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../exploit-mitigations/aslr.html"><strong aria-hidden="true">5.1.</strong> Address Space Layout Randomization (ASLR)</a></li><li class="chapter-item expanded "><a href="../exploit-mitigations/dep.html"><strong aria-hidden="true">5.2.</strong> Data Execution Prevention (DEP)/NX</a></li><li class="chapter-item expanded "><a href="../exploit-mitigations/position-independent-executables.html"><strong aria-hidden="true">5.3.</strong> Position Independent Executables (PIEs)</a></li><li class="chapter-item expanded "><a href="../exploit-mitigations/exploiting-pies.html"><strong aria-hidden="true">5.4.</strong> Exploiting PIEs</a></li><li class="chapter-item expanded "><a href="../exploit-mitigations/stack-canaries.html"><strong aria-hidden="true">5.5.</strong> Stack canaries</a></li><li class="chapter-item expanded "><a href="../exploit-mitigations/safe-list-unlinking.html"><strong aria-hidden="true">5.6.</strong> Safe list unlinking</a></li></ol></li></ol>
+            </div>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
+        </nav>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky bordered">
+                    <div class="left-buttons">
+                        <button id="sidebar-toggle" class="icon-button" type="button" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </button>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu (default)</button></li>
+                        </ul>
+                        <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
+                            <i class="fa fa-search"></i>
+                        </button>
+                    </div>
+
+                    <h1 class="menu-title">Introduction to the Dark Arts</h1>
+
+                    <div class="right-buttons">
+                        <a href="../print.html" title="Print this book" aria-label="Print this book">
+                            <i id="print-button" class="fa fa-print"></i>
+                        </a>
+                    </div>
+                </div>
+
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <input type="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script type="text/javascript">
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <main>
+                        <h1 id="race-conditions"><a class="header" href="#race-conditions">Race conditions</a></h1>
+<p>Before we explain how <strong>race conditions</strong> can be used for exploitation, let's
+first understand race conditions. Like with everything, there's a Common
+Weakness Enumeration (CWE) entry for this vulnerability. The formal name for a
+race condition is
+<a href="#references">Concurrent Execution using Shared Resource with Improper Synchronization</a>.
+What this essentially means is that the vulnerable program is leveraging
+parallelism, executing sections of code concurrently. Concurrent operations
+exist in just about every modern application as it's much more effecient than
+executing code sequentially and makes better use of available operating system
+resources.</p>
+<p>The problem in this situation, as stated in the title, is that the use of
+resources across execution contexts is improperly synchronized. If you've dealt
+with multi-processing or multi-threading before, you'll understand the need to
+protect shared resources by enforcing atomicity and exclusivity. Two or more
+execution contexts accessing or modifying a shared resource without the proper
+use of synchronization mechanisms can lead to undefined behavior - and
+undefined behavior can lead to program exploitation.</p>
+<p>In the following sections, we'll discuss a few vulnerabilities that are
+children of race conditions, with some examples on how they can be exploited.</p>
+<h2 id="signal-handler-race-condition"><a class="header" href="#signal-handler-race-condition">Signal Handler Race Condition</a></h2>
+<p><a href="#references">Signal handler race conditions</a> can occur when signal handlers
+registered for a process use non-reentrnant functions.
+<a href="#references">Reentrancy</a> is a property of a function or subroutine where
+multiple invocations can safely run concurrently. Reentrant functions can be
+interrupted in the middle of their execution and then safely re-entered
+before previous invocations complete execution.</p>
+<p>Non-reentrant functions that are commonly involved with this vulnerability
+include <code>malloc()</code> and <code>free()</code> because they may use global or static data
+structures for managing memory. This vulnerability manifests when a procedure
+used for signal handling is registered for multiple signals and accesses the
+shared resources during the handling of the signal. Below is some example code
+that demonstrates this vulnerability, written by Michal Zalewski in the article
+, <a href="#references">Delivering Signals for Fun and Profit</a>:</p>
+<pre><code class="language-c">/*********************************************************
+ * This is a generic verbose signal handler - does some  *
+ * logging and cleanup, probably calling other routines. *
+ *********************************************************/
+
+void sighndlr(int dummy) {
+  syslog(LOG_NOTICE,user_dependent_data);
+  // *** Initial cleanup code, calling the following somewhere:
+  free(global_ptr2);
+  free(global_ptr1);
+  // *** 1 *** &gt;&gt; Additional clean-up code - unlink tmp files, etc &lt;&lt;
+  exit(0);
+}
+
+  /**************************************************
+   * This is a signal handler declaration somewhere *
+   * at the beginning of main code.                 *
+   **************************************************/
+
+  signal(SIGHUP,sighndlr);
+  signal(SIGTERM,sighndlr);
+
+  // *** Other initialization routines, and global pointer
+  // *** assignment somewhere in the code (we assume that
+  // *** nnn is partially user-dependent, yyy does not have to be):
+
+  global_ptr1=malloc(nnn); 
+  global_ptr2=malloc(yyy);
+
+  // *** 2 *** &gt;&gt; further processing, allocated memory &lt;&lt;
+  // *** 2 *** &gt;&gt; is filled with any data, etc...     &lt;&lt;
+</code></pre>
+<p>In this example, Michael discusses that this code is vulnerable because both
+<code>SIGHUP</code> and <code>SIGTERM</code>'s signal handlers execute <code>syslog()</code>, which uses
+<code>malloc()</code>, and <code>free()</code> on the same shared resources. These functions are not
+re-entrant because they operate on the same global structures, if one of the
+signal handler functions were suspended while the other executed, it's possible
+that, once <code>global_ptr2</code> is <code>free()</code>d, <code>syslog()</code> could be executed with
+attacker-supplied data, re-using the free chunk and overwriting heap metadata.
+Given the right conditions, this could lead to process exploitation.</p>
+<h2 id="race-condition-within-a-thread"><a class="header" href="#race-condition-within-a-thread">Race Condition within a Thread</a></h2>
+<p><a href="#references">This particular example</a> is pretty straight-forward: two threads
+of execution in a program use a resource simultaneously without proper
+synchronization, possibly causing the threads to use invalid resources, leading
+to an undefined program state.</p>
+<p>Below is some example C code from CWE demonstrating this vulnerability:</p>
+<pre><code class="language-c">int foo = 0;
+int storenum(int num) {
+	static int counter = 0;
+	counter++;
+	if (num &gt; foo) foo = num;
+	return foo;
+}
+</code></pre>
+<p>Again, pretty straight-foward. If this code executed concurrently using two
+different threads, the value of <code>foo</code> after this procedure's <code>return</code>s is not
+deterministic between different invocations of the program.</p>
+<p>A more interesting and real-world example of this bug that achieves code
+execution is demonstrated in the article,
+<a href="#references">Racing MIDI messages in Chrome</a>, by Google Project Zero. Some
+background information: Chrome implements a user facing JavaScript API that
+conducts inter-process communication (IPC) with a privilieged browser process
+that provides brokered access to MIDI (Musical Instrument Digital Interface)
+devices. Yeah, it's a surprise to me, too.</p>
+<p>Anyways, the author goes to describe two bugs he found in the MIDI manager's
+implementation, both vulnerable to a use-after-free (UAF) bug due to a race
+condition. Because concurrent operations on objects in the heap are not
+properly synchronized between threads, it's possible to coerce one of threads
+to execute a virtual function of an already free object in the heap. The author
+goes on to provide a proof of concept to obtain code execution using the first
+bug, leveraging heap grooming to obtain a desirable heap state before forcing a
+series of allocations to overwrite the <code>vtable</code> of the free object.</p>
+<p>Without an adequate sensitive information disclosure, he is unable to
+predicatbly redirect the process to obtain arbitrary code execution, however,
+he still demonstrates that he can gain control of the <code>RIP</code>.</p>
+<h2 id="time-of-check-time-of-use-toctou"><a class="header" href="#time-of-check-time-of-use-toctou">Time-of-check Time-of-use (TOCTOU)</a></h2>
+<p><a href="#references">Time-of-check time-of-use (TOCTOU)</a> is a classic vulnerability
+that is a child of the race condition weakness. In summation, the program
+checks the state of a resource, our permissions to access the resource, etc.,
+before actually using it. The actual use of the resource comes <em>after</em> the
+check, but what if the state of the resource changes before it's used? If we
+check the resource but its properties change before we actually use it, our
+program is liable to have undefined behavior.</p>
+<p>An interesting example of this vulnerability and how it can be exploited was
+covered in the <a href="#references">logrotate</a> challenge of 35C3CTF 2019. In the
+challenge, the <code>logrotate</code> binary rotates logs within the <code>/tmp/log</code> directory,
+owned by the user. The <code>logrotate</code> program executes as <code>root</code>, but creates
+files that are owned by <code>user:user</code> in the directory of <code>/tmp/log</code>. <code>logrotate</code>
+executes <code>stat()</code> on the <code>/tmp/log</code> directory prior to using the directory
+to write <code>/tmp/log/pwnme.log</code>, making <code>logrotate</code> vulnerable to a TOCTOU race
+condition.</p>
+<p>Armed with this information, the author of the writeup uses <code>inotify</code> to detect
+when a change occurs for the <code>/tmp/log</code> directory. As soon as this happens, the
+author creates a symbolic link for <code>/tmp/log</code> pointing it to
+<code>/etc/bash_completion.d</code>. <code>logrotate</code> creates a <code>user</code> owned <code>pwnme.log</code> file
+in <code>/etc/bash_completion.d</code> where the author writes his reverse-shell callback
+shell script to. The next time <code>root</code> acquires a session, the reverse-shell
+callback script is executed and the attacker is able to acquire a <code>root</code> shell.</p>
+<p>The CTF challenge I just described is also a good example of the CWE: 
+<a href="#references">Symbolic Name not Mapping to Correct Object</a>.</p>
+<h2 id="conclusion"><a class="header" href="#conclusion">Conclusion</a></h2>
+<p>There are a few other vulnerabilities that are children of the general race
+condition CWE such as:</p>
+<ul>
+<li>Context Switching Race Condition</li>
+<li>Race Condition During Access to Alternate Channel</li>
+<li>Permission Race Condition During Resource Copy</li>
+</ul>
+<p>While these are also interesting CWEs related to race conditions, the ones we
+discussed above have pretty solid examples and demonstrations of real-world
+application, which is the primary reason why I covered them.</p>
+<h2 id="references"><a class="header" href="#references">References</a></h2>
+<ol>
+<li><a href="https://cwe.mitre.org/data/definitions/362.html">https://cwe.mitre.org/data/definitions/362.html</a></li>
+<li><a href="https://cwe.mitre.org/data/definitions/364.html">https://cwe.mitre.org/data/definitions/364.html</a></li>
+<li><a href="https://en.wikipedia.org/wiki/Reentrancy_(computing)">https://en.wikipedia.org/wiki/Reentrancy_(computing)</a></li>
+<li><a href="https://lcamtuf.coredump.cx/signals.txt">https://lcamtuf.coredump.cx/signals.txt</a></li>
+<li><a href="https://cwe.mitre.org/data/definitions/366.html">https://cwe.mitre.org/data/definitions/366.html</a></li>
+<li><a href="https://googleprojectzero.blogspot.com/2016/02/racing-midi-messages-in-chrome.html">https://googleprojectzero.blogspot.com/2016/02/racing-midi-messages-in-chrome.html</a></li>
+<li><a href="https://cwe.mitre.org/data/definitions/367.html">https://cwe.mitre.org/data/definitions/367.html</a></li>
+<li><a href="https://tech.feedyourhead.at/content/abusing-a-race-condition-in-logrotate-to-elevate-privileges">https://tech.feedyourhead.at/content/abusing-a-race-condition-in-logrotate-to-elevate-privileges</a></li>
+<li><a href="https://cwe.mitre.org/data/definitions/386.html">https://cwe.mitre.org/data/definitions/386.html</a></li>
+<li><a href="https://cwe.mitre.org/data/definitions/368.html">https://cwe.mitre.org/data/definitions/368.html</a></li>
+<li><a href="https://cwe.mitre.org/data/definitions/421.html">https://cwe.mitre.org/data/definitions/421.html</a></li>
+</ol>
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                            <a rel="prev" href="../common-vulnerabilities/heap-grooming.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
+                            <a rel="next" href="../exploit-primitives/exploit-primitives.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                    <a rel="prev" href="../common-vulnerabilities/heap-grooming.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+                    <a rel="next" href="../exploit-primitives/exploit-primitives.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+            </nav>
+
+        </div>
+
+        <!-- Livereload script (if served using the cli tool) -->
+        <script type="text/javascript">
+            var socket = new WebSocket("ws://localhost:3000/__livereload");
+            socket.onmessage = function (event) {
+                if (event.data === "reload") {
+                    socket.close();
+                    location.reload();
+                }
+            };
+
+            window.onbeforeunload = function() {
+                socket.close();
+            }
+        </script>
+        <script type="text/javascript">
+            window.playground_copyable = true;
+        </script>
+        <script src="../elasticlunr.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../mark.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../searcher.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../clipboard.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../highlight.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../book.js" type="text/javascript" charset="utf-8"></script>
+
+        <!-- Custom JS scripts -->
+    </body>
+</html>

@@ -1,0 +1,321 @@
+<!DOCTYPE HTML>
+<html lang="en" class="sidebar-visible no-js ayu">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>ASLR/NX - Introduction to the Dark Arts</title>
+        <!-- Custom HTML head -->
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff" />
+
+        <link rel="icon" href="../favicon.svg">
+        <link rel="shortcut icon" href="../favicon.png">
+        <link rel="stylesheet" href="../css/variables.css">
+        <link rel="stylesheet" href="../css/general.css">
+        <link rel="stylesheet" href="../css/chrome.css">
+        <link rel="stylesheet" href="../css/print.css" media="print">
+        <!-- Fonts -->
+        <link rel="stylesheet" href="../FontAwesome/css/font-awesome.css">
+        <link rel="stylesheet" href="../fonts/fonts.css">
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" href="../highlight.css">
+        <link rel="stylesheet" href="../tomorrow-night.css">
+        <link rel="stylesheet" href="../ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+    </head>
+    <body>
+        <!-- Provide site root to javascript -->
+        <script type="text/javascript">
+            var path_to_root = "../";
+            var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "navy" : "ayu";
+        </script>
+
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script type="text/javascript">
+            try {
+                var theme = localStorage.getItem('mdbook-theme');
+                var sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script type="text/javascript">
+            var theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            var html = document.querySelector('html');
+            html.classList.remove('no-js')
+            html.classList.remove('ayu')
+            html.classList.add(theme);
+            html.classList.add('js');
+        </script>
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script type="text/javascript">
+            var html = document.querySelector('html');
+            var sidebar = 'hidden';
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            }
+            html.classList.remove('sidebar-visible');
+            html.classList.add("sidebar-" + sidebar);
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <div class="sidebar-scrollbox">
+                <ol class="chapter"><li class="chapter-item expanded affix "><a href="../introduction.html">Introduction</a></li><li class="chapter-item expanded "><a href="../reverse-engineering/reverse-engineering.html"><strong aria-hidden="true">1.</strong> Reverse engineering</a><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../reverse-engineering/static-reverse-engineering.html"><strong aria-hidden="true">1.1.</strong> Static reverse Engineering</a></li><li class="chapter-item expanded "><a href="../reverse-engineering/dynamic-reverse-engineering.html"><strong aria-hidden="true">1.2.</strong> Dynamic reverse engineering</a></li><li class="chapter-item expanded "><a href="../reverse-engineering/dumb-fuzzing.html"><strong aria-hidden="true">1.3.</strong> Dumb fuzzing</a></li><li class="chapter-item expanded "><a href="../reverse-engineering/instrumentation.html"><strong aria-hidden="true">1.4.</strong> Instrumentation</a></li><li class="chapter-item expanded "><a href="../reverse-engineering/code-coverage-fuzzing.html"><strong aria-hidden="true">1.5.</strong> Coverage-based fuzzing</a></li><li class="chapter-item expanded "><a href="../reverse-engineering/symbolic-execution.html"><strong aria-hidden="true">1.6.</strong> Symbolic execution</a></li><li class="chapter-item expanded "><a href="../reverse-engineering/binary-diffing.html"><strong aria-hidden="true">1.7.</strong> Binary diffing</a></li><li class="chapter-item expanded "><a href="../reverse-engineering/binary-diffing-tools.html"><strong aria-hidden="true">1.8.</strong> Binary diffing tools</a></li></ol></li><li class="chapter-item expanded "><a href="../common-vulnerabilities/common-vulnerabilities.html"><strong aria-hidden="true">2.</strong> Common vulnerabilities</a><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../common-vulnerabilities/stack-buffer-overflow.html"><strong aria-hidden="true">2.1.</strong> Stack buffer overflow</a></li><li class="chapter-item expanded "><a href="../common-vulnerabilities/heap-buffer-overflow.html"><strong aria-hidden="true">2.2.</strong> Heap buffer overflow</a><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><a href="../common-vulnerabilities/house-of-force.html"><strong aria-hidden="true">2.2.1.</strong> House of Force</a></li><li class="chapter-item "><a href="../common-vulnerabilities/house-of-orange.html"><strong aria-hidden="true">2.2.2.</strong> House of Orange</a></li><li class="chapter-item "><a href="../common-vulnerabilities/single-byte-overflows.html"><strong aria-hidden="true">2.2.3.</strong> Single Byte Overflows</a></li></ol></li><li class="chapter-item expanded "><a href="../common-vulnerabilities/use-after-free.html"><strong aria-hidden="true">2.3.</strong> Use after free</a><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><a href="../common-vulnerabilities/fastbin-dup.html"><strong aria-hidden="true">2.3.1.</strong> Fastbin Dup</a></li><li class="chapter-item "><a href="../common-vulnerabilities/unsortedbin-attack.html"><strong aria-hidden="true">2.3.2.</strong> Unsortedbin Attack</a></li></ol></li><li class="chapter-item expanded "><a href="../common-vulnerabilities/heap-grooming.html"><strong aria-hidden="true">2.4.</strong> Heap grooming</a></li><li class="chapter-item expanded "><a href="../common-vulnerabilities/race-conditions.html"><strong aria-hidden="true">2.5.</strong> Race conditions</a></li></ol></li><li class="chapter-item expanded "><a href="../exploit-primitives/exploit-primitives.html"><strong aria-hidden="true">3.</strong> Exploit primitives</a><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../exploit-primitives/arbitrary-write-primitives.html"><strong aria-hidden="true">3.1.</strong> Arbitrary write primitives</a></li><li class="chapter-item expanded "><a href="../exploit-primitives/relative-write-primitives.html"><strong aria-hidden="true">3.2.</strong> Relative write primitives</a></li><li class="chapter-item expanded "><a href="../exploit-primitives/arbitrary-read-primitives.html"><strong aria-hidden="true">3.3.</strong> Arbitrary read primitives</a></li><li class="chapter-item expanded "><a href="../exploit-primitives/chaining-primitives.html"><strong aria-hidden="true">3.4.</strong> Chaining primitives</a></li><li class="chapter-item expanded "><a href="../exploit-primitives/escalating-privileges.html"><strong aria-hidden="true">3.5.</strong> Escalating privileges</a></li></ol></li><li class="chapter-item expanded "><a href="../return-oriented-programming/return-oriented-programming.html"><strong aria-hidden="true">4.</strong> Return oriented programming</a><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../return-oriented-programming/aslr-nx.html" class="active"><strong aria-hidden="true">4.1.</strong> ASLR/NX</a></li><li class="chapter-item expanded "><a href="../return-oriented-programming/finding-gadgets.html"><strong aria-hidden="true">4.2.</strong> Finding gadgets</a></li><li class="chapter-item expanded "><a href="../return-oriented-programming/calling-libc-functions-and-syscalls.html"><strong aria-hidden="true">4.3.</strong> Calling libc functions and syscalls</a></li><li class="chapter-item expanded "><a href="../return-oriented-programming/chaining-gadgets-to-execute-code.html"><strong aria-hidden="true">4.4.</strong> Chaining gadgets to execute code</a></li><li class="chapter-item expanded "><a href="../return-oriented-programming/executing-arbitrary-shellcode.html"><strong aria-hidden="true">4.5.</strong> Executing arbitrary shellcode</a></li></ol></li><li class="chapter-item expanded "><a href="../exploit-mitigations/exploit-mitigations.html"><strong aria-hidden="true">5.</strong> Exploit mitigations</a><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../exploit-mitigations/aslr.html"><strong aria-hidden="true">5.1.</strong> Address Space Layout Randomization (ASLR)</a></li><li class="chapter-item expanded "><a href="../exploit-mitigations/dep.html"><strong aria-hidden="true">5.2.</strong> Data Execution Prevention (DEP)/NX</a></li><li class="chapter-item expanded "><a href="../exploit-mitigations/position-independent-executables.html"><strong aria-hidden="true">5.3.</strong> Position Independent Executables (PIEs)</a></li><li class="chapter-item expanded "><a href="../exploit-mitigations/exploiting-pies.html"><strong aria-hidden="true">5.4.</strong> Exploiting PIEs</a></li><li class="chapter-item expanded "><a href="../exploit-mitigations/stack-canaries.html"><strong aria-hidden="true">5.5.</strong> Stack canaries</a></li><li class="chapter-item expanded "><a href="../exploit-mitigations/safe-list-unlinking.html"><strong aria-hidden="true">5.6.</strong> Safe list unlinking</a></li></ol></li></ol>
+            </div>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
+        </nav>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky bordered">
+                    <div class="left-buttons">
+                        <button id="sidebar-toggle" class="icon-button" type="button" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </button>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu (default)</button></li>
+                        </ul>
+                        <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
+                            <i class="fa fa-search"></i>
+                        </button>
+                    </div>
+
+                    <h1 class="menu-title">Introduction to the Dark Arts</h1>
+
+                    <div class="right-buttons">
+                        <a href="../print.html" title="Print this book" aria-label="Print this book">
+                            <i id="print-button" class="fa fa-print"></i>
+                        </a>
+                    </div>
+                </div>
+
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <input type="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script type="text/javascript">
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <main>
+                        <h1 id="overcoming-aslrnx"><a class="header" href="#overcoming-aslrnx">Overcoming ASLR/NX</a></h1>
+<h2 id="what-is-rop"><a class="header" href="#what-is-rop">What is ROP?</a></h2>
+<p><strong>The below explanation is tailored towards x86 return-oriented programming.
+For amd64, the register names would change from E%%-&gt;R%% and word size would be
+8 bytes instead of 4.</strong></p>
+<p>In a normal program, machine instructions are located within the <code>.text</code>
+segment of the process's memory. Each instruction is a pattern of bytes to be
+interpreted by the processor to change the program's state. The instruction
+pointer, <code>EIP</code>, governs the sequential flow of a program, pointing to the
+instruction that is to be fetched next and advanced by the processor after
+each instruction is executed.</p>
+<p>A return-oriented program is a particular layout of the <code>stack</code> segment within
+a process - the <code>stack</code> segment being the location within the process's
+memory that is pointed to by the <code>ESP</code> (more on this later in stack pivoting).
+Return-oriented instructions are words on the <code>stack</code> that point to an
+instruction sequence within the process's memory. In return-oriented
+programming, the <code>stack</code> pointer, <code>ESP</code>, now governs the control flow of the
+program and points to the next instruction sequence that will be fetched and
+executed.</p>
+<p>The execution of return-oriented programs is as follows:</p>
+<ul>
+<li>The word on the <code>stack</code> that the <code>ESP</code> points to is read and used as the
+new value for the <code>EIP</code>.</li>
+<li>The <code>ESP</code> is incremented by 4 bytes, pointing to the next word on the stack.</li>
+<li>The processor completes execution of the instruction sequence and, if the
+provided instruction sequence was a <code>ROP</code> gadget, a <code>ret</code> would be executed to
+repeat this process.</li>
+</ul>
+<p>In contrast to normal programs, the <code>ret</code> instruction at the end of each
+instruction sequence pointed to on the <code>stack</code> induces fetch-and-decode
+behavior.</p>
+<h2 id="what-is-jop"><a class="header" href="#what-is-jop">What is JOP?</a></h2>
+<p>With the popularity of <code>ROP</code>, some work has been done to protect against or
+mitigate attacks that leverage <code>ROP</code> to deliver malicious payloads and gain
+code execution. Proposed defenses include detection of consecutive <code>ret</code>
+instructions that are suspected <code>ROP</code> gadgets <a href="#references">[2]</a>, detection of
+<code>ROP</code>-inherent behaviors like continuously popping return addresses that always
+point to the same memory space <a href="#references">[3]</a>, and the elimination of all
+<code>ret</code> instructions within a program to remove return-oriented gadgets
+<a href="#references">[4]</a>.</p>
+<p>Unlike <code>ROP</code>, Jump-oriented programming (<code>JOP</code>) does not rely upon the <code>stack</code>
+or <code>ret</code> instructions for gadget discovery and gadget chaining. Like <code>ROP</code>,
+<code>JOP</code> finds its gadgets within executable code snippets within the target
+binary or in the standard C library, however, <code>JOP</code> gadgets end with an
+indirect <code>jmp</code> instruction. To chain gadgets together, <code>JOP</code> specifies two
+types of gadgets: the <code>dispatcher gadget</code> and <code>functional gadgets</code>.</p>
+<p>In <code>ROP</code>, gadgets are stored on the <code>stack</code> and the <code>ESP</code> acts as the program
+counter for a return-oriented program. In <code>JOP</code>, the program counter is any
+register that points into the <code>dispatch table</code>, and control flow is dictated by
+the <code>dispatcher gadget</code> that executes the sequence of gadgets within the
+<code>dispatch table</code>. Each entry within the <code>dispatch table</code> points to a
+<code>functional gadget</code>. In the corpus of gadgets derived from the code contained
+within a target binary or shared library, the <code>dispatcher gadget</code> is comprised
+of jump-oriented gadgets that advance the program counter within the dispatch
+table and incorporate the least frequently used registers. This is done to
+avoid having the program counter register subjected to side effects of
+instructions in <code>functional gadgets</code>.</p>
+<p><code>Functional gadgets</code> within jump-oriented programming are useful instructions
+ending in a sequence that will load the instruction pointer with the result of
+a known expression. The primary requirement for <code>functional gadgets</code> is that,
+by the time the gadget's <code>jmp %</code> instruction is executed, the <code>jmp</code> must
+evaluate to the address of the <code>dispatcher gadget</code> or to another gadget that
+leads to the <code>dispatcher</code>. Sequences that end in a <code>call</code> instruction are also
+viable candidates for jump-oriented gadgets.</p>
+<h3 id="so-how-do-we-gain-control-flow"><a class="header" href="#so-how-do-we-gain-control-flow">So how do we gain control flow?</a></h3>
+<p>Let's assume we've exploited some vulnerability within a target binary to gain
+control of the <code>EIP</code>. While <code>ROP</code> only requires control over the <code>EIP</code> and the
+<code>ESP</code>, <code>JOP</code> requires control over the <code>EIP</code> and any memory locations or
+registers necessary to run the <code>dispatcher gadget</code>. To do this, an
+<code>initializer gadget</code> is used to fill the relevant registers before jumping to
+the <code>dispatcher gadget</code>.</p>
+<h3 id="why-would-i-use-jop-over-rop"><a class="header" href="#why-would-i-use-jop-over-rop">Why would I use JOP over ROP?</a></h3>
+<p>As stated earlier, defenses have been proposed to detect <code>ROP</code> behavior within
+a compromised binary. <code>JOP</code>'s lack of reliance on the <code>stack</code> and use of <code>jmp</code>
+and <code>call</code> instructions for control flow make it much harder to detect and
+create identifiers for. If it is known that your target implements some sort of
+protection mechanism to thwart <code>ROP</code>, <code>JOP</code> is still an option to gain control
+over a target and execute code.</p>
+<h2 id="does-a-ropjop-gadget-have-to-be-specifically-from-the-text-segment-of-a-binary-what-are-the-characteristics-of-a-usable-gadget"><a class="header" href="#does-a-ropjop-gadget-have-to-be-specifically-from-the-text-segment-of-a-binary-what-are-the-characteristics-of-a-usable-gadget">Does a ROP/JOP gadget have to be specifically from the <code>.text</code> segment of a binary? What are the characteristics of a usable gadget?</a></h2>
+<p><em>&quot;[A] gadget is an arrangement of words on the stack, both pointers to
+instruction sequences and immediate data words, that when invoked accomplishes
+some well-defined task.&quot;</em> <a href="#references">[1]</a></p>
+<p>The above quote suggests that <code>ROP</code> gadgets can be interpreted as a grouping of
+words including one or more instruction sequences and immediate values that
+encode a logical unit. Gadgets can be built from short instruction sequences
+within target binaries, but they also can be derived from libraries used by
+target binaries - a commonly used library being the standard C library.</p>
+<p><code>ROP</code> gadgets must be constructed so that when the <code>ret</code> instruction in the
+instruction sequence is executed, <code>ESP</code> points to the next gadget to be
+executed. The instruction sequences pointed to by gadgets must also reside
+within executable segments of memory.</p>
+<p>The characteristics of usable <code>JOP</code> gadgets are described in the previous
+section: <a href="#what-is-jop">&quot;What is JOP?&quot;</a></p>
+<h2 id="what-kind-of-primitives-and-conditions-might-allow-you-to-bypass-aslr-via-ropjop-on-a-non-pie-binary"><a class="header" href="#what-kind-of-primitives-and-conditions-might-allow-you-to-bypass-aslr-via-ropjop-on-a-non-pie-binary">What kind of primitive(s) and condition(s) might allow you to bypass ASLR via ROP/JOP on a non-PIE binary?</a></h2>
+<p>Untrusted Pointer Dereferences, Out-of-bounds Reads, Buffer Over-reads and
+similar conditions that provide arbitrary or relative read primitives can be
+used in a <code>ROP</code>/<code>JOP</code> attack to bypass <code>ASLR</code>. An attacker would aim to expose
+a <code>libc</code> address to calculate the base of <code>libc</code> within the mapping of the
+target's memory.</p>
+<p>For a non-<code>PIE</code> binary, an attacker could also construct a <code>ROP</code> gadget that
+would return into the <code>.plt</code> section to execute some <code>libc</code> function like
+<code>printf</code> or <code>puts</code>. The target of this <code>printf</code> or <code>puts</code> call would be an
+entry within <code>.got.plt</code> for a <code>libc</code> function that has already been resolved
+by the linker. This would expose the address of the target <code>libc</code> function to
+the attacker, allowing the attacker to calculate the base of <code>libc</code> within the
+target's memory. This method works on non-<code>PIE</code> binaries because the <code>.plt</code>
+section will be defined at some static address.</p>
+<h2 id="can-the-plt-be-used-to-call-libc-functions-even-when-pie-is-enabled-what-primitives-and-conditions-might-be-required"><a class="header" href="#can-the-plt-be-used-to-call-libc-functions-even-when-pie-is-enabled-what-primitives-and-conditions-might-be-required">Can the PLT be used to call libc functions even when PIE is enabled? What primitive(s) and condition(s) might be required?</a></h2>
+<p>With <code>PIE</code> enabled, we must find some way to expose a program address to
+calculate the base of the program loaded into the process's memory. This allows
+us to calculate the location of the <code>.plt</code> section of the program within
+memory. The same conditions as in the previous bullet are necessary; Untrusted
+Pointer Dereferences, Out-of-bounds Reads, Buffer Over-reads and similar
+conditions that provide arbitrary or relative read primitives can be used to
+expose sensitive information required to build an exploit.</p>
+<h2 id="how-does-ropjop-evade-nxwx"><a class="header" href="#how-does-ropjop-evade-nxwx">How does ROP/JOP evade NX/W^X?</a></h2>
+<p>NX, DEP, or the concept of W^X were created in order to combat conventional
+code injection techniques that usually executed code directly from the stack.
+Attackers found a way around this by using code that was already present within
+memory and marked executable, thus inventing return-oriented programming and
+jump-oriented programming.</p>
+<p>A sufficient set of <code>ROP</code>/<code>JOP</code> gadgets provides Turing complete functionality
+to the attacker, evading the W^X protection mechanism that is designed to
+prevent arbitrary code execution.</p>
+<h2 id="references"><a class="header" href="#references">References</a></h2>
+<ol>
+<li><a href="https://hovav.net/ucsd/dist/rop.pdf">https://hovav.net/ucsd/dist/rop.pdf</a></li>
+<li><a href="http://www.cs.jhu.edu/%7Esdoshi/jhuisi650/papers/spimacs/SPIMACS_CD/stc/p49.pdf">http://www.cs.jhu.edu/~sdoshi/jhuisi650/papers/spimacs/SPIMACS_CD/stc/p49.pdf</a></li>
+<li><a href="https://link.springer.com/chapter/10.1007%2F978-3-642-10772-6_13">https://link.springer.com/chapter/10.1007%2F978-3-642-10772-6_13</a></li>
+<li><a href="https://www.csc2.ncsu.edu/faculty/xjiang4/pubs/ASIACCS11.pdf">https://www.csc2.ncsu.edu/faculty/xjiang4/pubs/ASIACCS11.pdf</a></li>
+</ol>
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                            <a rel="prev" href="../return-oriented-programming/return-oriented-programming.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
+                            <a rel="next" href="../return-oriented-programming/finding-gadgets.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                    <a rel="prev" href="../return-oriented-programming/return-oriented-programming.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+                    <a rel="next" href="../return-oriented-programming/finding-gadgets.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+            </nav>
+
+        </div>
+
+        <!-- Livereload script (if served using the cli tool) -->
+        <script type="text/javascript">
+            var socket = new WebSocket("ws://localhost:3000/__livereload");
+            socket.onmessage = function (event) {
+                if (event.data === "reload") {
+                    socket.close();
+                    location.reload();
+                }
+            };
+
+            window.onbeforeunload = function() {
+                socket.close();
+            }
+        </script>
+        <script type="text/javascript">
+            window.playground_copyable = true;
+        </script>
+        <script src="../elasticlunr.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../mark.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../searcher.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../clipboard.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../highlight.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../book.js" type="text/javascript" charset="utf-8"></script>
+
+        <!-- Custom JS scripts -->
+    </body>
+</html>
