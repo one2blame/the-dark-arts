@@ -6,6 +6,7 @@ src = "src"
 title = "Introduction to the Dark Arts"
 
 [output.html]
+preferred-dark-theme = "ayu"
 default-theme = "ayu"
 fold.enable = true
 fold.level = 2
